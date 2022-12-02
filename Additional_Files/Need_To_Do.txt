@@ -1,9 +1,9 @@
-Index.html
+Index.html --- Functionality working, displays most recent post --- Needs front end work, possibly change to display most recent 3.
 - Display most recent post
 - Link to content page
 - Link to login
 
-Content.html
+Content.html --- Courtney
 - Display all posts - most recent to oldest
 - Filter to display by date or find hashtags
 - Link to index (home)
@@ -13,17 +13,25 @@ Login.html
 - Link to index (home)
 - Redirect based on who logs in
 
-Admin.html
+Admin.html --- Yaren and Sarah
+- admin.html main page - needs table to show pending
+                        needs table to show all posts with id, title, dates, view, edit, and delete buttons
+                        header with links to home (index), content, write, logout
+- adminReviewPending.html
 - Approve user posts
 - Link to write posts
 - Edit posts
+- Delete posts
 - Link to index (home)
 - Link to logout
 
-User.html
+User.html --- Andrea
 - Link to write posts
 - Link to index (home)
 - Link to logout
 
-WritePost.html
+WritePost.html --- Working as group
 - Text editor to write and save new post
+
+EditPost.html
+- Text editor pulls in post to allow edits

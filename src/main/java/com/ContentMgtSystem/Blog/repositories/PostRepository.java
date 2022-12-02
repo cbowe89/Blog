@@ -12,6 +12,7 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Integer> {
     List<Post> findByUser(User user);
 
-    @Query(value = "SELECT * FROM post ORDER BY created_date DESC LIMIT 1", nativeQuery = true)
+    // Get the most recent post based on Timestamp that has approved status
+    @Query(value = "SELECT * FROM post WHERE status_id = 2 ORDER BY created_date DESC LIMIT 1", nativeQuery = true)
     List<Post> findAllByTimestamp();
 }
