@@ -1,0 +1,29 @@
+Index.html
+- Display most recent post
+- Link to content page
+- Link to login
+
+Content.html
+- Display all posts - most recent to oldest
+- Filter to display by date or find hashtags
+- Link to index (home)
+- Link to login
+
+Login.html
+- Link to index (home)
+- Redirect based on who logs in
+
+Admin.html
+- Approve user posts
+- Link to write posts
+- Edit posts
+- Link to index (home)
+- Link to logout
+
+User.html
+- Link to write posts
+- Link to index (home)
+- Link to logout
+
+WritePost.html
+- Text editor to write and save new post
