@@ -28,6 +28,10 @@ public class Post {
     @Column
     private Timestamp expiration_date;
 
+    @ManyToOne
+    @JoinColumn(name = "status_id", nullable = false)
+    private Post_Status post_status;
+
     @ManyToMany
     @JoinTable(name = "post_tag",
             joinColumns = {@JoinColumn(name = "post_id")},
@@ -82,6 +86,22 @@ public class Post {
         this.expiration_date = expiration_date;
     }
 
+    public Post_Status getPost_status() {
+        return post_status;
+    }
+
+    public void setPost_status(Post_Status post_status) {
+        this.post_status = post_status;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -92,12 +112,14 @@ public class Post {
                 && Objects.equals(title, post.title)
                 && Objects.equals(content, post.content)
                 && Objects.equals(created_date, post.created_date)
-                && Objects.equals(expiration_date, post.expiration_date);
+                && Objects.equals(expiration_date, post.expiration_date)
+                && Objects.equals(post_status, post.post_status)
+                && Objects.equals(tags, post.tags);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(post_id, user, title, content,
-                created_date, expiration_date);
+                created_date, expiration_date, post_status, tags);
     }
 }
