@@ -28,4 +28,9 @@ public class MainController {
         model.addAttribute("posts", postRepository.findAllByTimestamp());
         return "index";
     }
+
+    @GetMapping("/writePost")
+    public String writePost() {
+        return "writePost";
+    }
 }
