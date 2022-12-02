@@ -25,7 +25,7 @@ public class MainController {
 
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("posts", postRepository.findAll());
+        model.addAttribute("posts", postRepository.findAllByTimestamp());
         return "index";
     }
 }
