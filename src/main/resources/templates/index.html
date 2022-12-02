@@ -1,7 +1,5 @@
 <!doctype html>
-<html lang="en"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8"/>
@@ -20,41 +18,29 @@
             <h1>Blog</h1>
         </div>
         <div class="row">
-            <div class="col-8">
-                <div class="row">
-                    <h3 class="col-12">Recent Posts</h3>
-                    <!--
-                    <div th:each="store : ${stores}" class="col-4 card text-center m-1">
-                        <div class="card-body">
-                            <h5 class="card-title" th:text="${store.name}">name</h5>
-                            <h6 class="card-subtitle mb-2 text-muted" th:text="${store.location}">location</h6>
-                            <h6 class="card-subtitle mb-2 text-muted" th:text="${store.manager}">manager</h6>
-                            <a href="#" th:href="@{viewInventory(id=${store.id})}" class="card-link">View Inventory</a>
-                        </div>
-                    </div>
-                    -->
-                </div>
-            </div>
-            <div class="col-4">
-                <!--
-                <h3>Add Store</h3>
-                <form action="addStore" method="POST" class="form">
-                    <div class="form-group">
-                        <label class="col-4" for="storeName">Name</label>
-                        <input class="col-8 form-control" type="text" id="storeName" name="name"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-4" for="storeLocation">Location</label>
-                        <input class="col-8 form-control" type="text" id="storeLocation" name="location"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-4" for="storeManager">Manager</label>
-                        <input class="col-8 form-control" type="text" id="storeManager" name="manager"/>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Add Store</button>
-                </form>
-                -->
-            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="content.html">Content</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </div>
+
+        <div class="row m-4 border border-dark">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Newest Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="post : ${posts}">
+                        <td th:text="${post.title} + ' ' + ${post.created_date}">Title - Created_Date</td>
+                    </tr>
+                    <tr th:each="post : ${posts}">
+                        <td th:text="${post.content}">Content</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <!-- Optional JavaScript -->
