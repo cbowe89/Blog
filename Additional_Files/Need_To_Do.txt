@@ -27,7 +27,9 @@ Admin.html --- Yaren and Sarah
 
 User.html --- Andrea
 - Link to write posts
+- Link to content
 - Link to index (home)
+- Display user's personal posts
 - Link to logout
 
 WritePost.html --- Working as group
