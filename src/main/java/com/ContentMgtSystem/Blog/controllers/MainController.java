@@ -49,9 +49,9 @@ public class MainController {
 
     @GetMapping("/admin")
     public String adminPage(Model model){
-        // Admin page should display all posts, regardless of status, simply findAll()
+        // Admin page should display all posts, regardless of status
         // Admin should be able to view and edit all posts, in addition to changing status
-        model.addAttribute("pendings",postRepository.findAllByPending());
+        model.addAttribute("posts",postRepository.findAll());
         return "admin";
     }
 
@@ -71,12 +71,6 @@ public class MainController {
     public String approvePost(int post_id){
         Post post = postRepository.findById(post_id).get();
 
-        // This line updates the wrong table (changed both status names to approved)
-        // commented out so you can view difference in what happens to post
-        // and post_status table when running that way
-        // Here we want to update the post itself so the FK status_id on the post changes
-        //post.getPost_status().setStatus_name("approved");
-        // confirmed below updates correct table, setPost_status method from Post entity take post_status param
         post.setPost_status(post_statusRepository.findById(2).orElse(null));
 
         postRepository.save(post);
