@@ -1,10 +1,15 @@
 package com.ContentMgtSystem.Blog.controllers;
 
+import com.ContentMgtSystem.Blog.entities.Post;
+import com.ContentMgtSystem.Blog.entities.Post_Status;
 import com.ContentMgtSystem.Blog.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.Optional;
 
 @Controller
 public class MainController {
@@ -53,10 +58,21 @@ public class MainController {
         return "redirect:/admin";
     }
 
+    @GetMapping("adminReview")
+    public String adminReviewPage(Model model){
+        model.addAttribute("pendings",postRepository.findAllByPending());
+        return "adminReview";
+    }
+
     @GetMapping("approvePost")
     public String approvePost(int post_id){
-        postRepository.changePostStatus(post_id);
-        return "redirect:/admin";
+        Post post = postRepository.findById(post_id).get();
+
+        post.getPost_status().setStatus_name("approved");
+
+        postRepository.save(post);
+
+        return "redirect:/adminReview";
     }
 
 }
