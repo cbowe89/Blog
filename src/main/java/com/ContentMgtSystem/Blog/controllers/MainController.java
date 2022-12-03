@@ -1,12 +1,14 @@
 package com.ContentMgtSystem.Blog.controllers;
 
 import com.ContentMgtSystem.Blog.entities.Post;
+import com.ContentMgtSystem.Blog.entities.User;
 import com.ContentMgtSystem.Blog.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -80,6 +82,14 @@ public class MainController {
         postRepository.save(post);
 
         return "redirect:/adminReview";
+    }
+
+    @GetMapping("user")
+    public String userPage(int user_id, Model model) {
+        User user = userRepository.findById(user_id).get();
+        List<Post> userPosts = postRepository.findByUser(user);
+        model.addAttribute("userPosts", userPosts);
+        return "user";
     }
 
 }
