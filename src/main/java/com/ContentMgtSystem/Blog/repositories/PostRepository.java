@@ -15,4 +15,6 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     // Get the most recent post based on Timestamp that has approved status
     @Query(value = "SELECT * FROM post WHERE status_id = 2 ORDER BY created_date DESC LIMIT 1", nativeQuery = true)
     List<Post> findAllByTimestamp();
+
+
 }

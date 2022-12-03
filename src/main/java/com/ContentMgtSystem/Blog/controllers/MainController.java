@@ -28,4 +28,5 @@ public class MainController {
         model.addAttribute("posts", postRepository.findAllByTimestamp());
         return "index";
     }
+
 }
