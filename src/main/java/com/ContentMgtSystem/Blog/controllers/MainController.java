@@ -34,6 +34,13 @@ public class MainController {
         return "index";
     }
 
+    @GetMapping("/content")
+    public String viewAllPosts(Model model) {
+        model.addAttribute("posts",
+                postRepository.findAllByOrderByCreated_dateDesc());
+        return "content";
+    }
+
     @GetMapping("/writePost")
     public String writePost() {
         return "writePost";
