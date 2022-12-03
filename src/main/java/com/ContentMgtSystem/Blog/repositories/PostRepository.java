@@ -17,8 +17,6 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     @Query(value = "SELECT * FROM post WHERE status_id = 2 ORDER BY created_date DESC LIMIT 1", nativeQuery = true)
     List<Post> findAllByTimestamp();
 
-<<<<<<< HEAD
-=======
     // display the pending posts
     @Query(value = "SELECT * FROM post WHERE status_id=1", nativeQuery = true)
     List<Post> findAllByPending();
@@ -26,6 +24,5 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     // approve posts
     @Query(value = "UPDATE post SET status_id = 2 WHERE post_id=?",nativeQuery = true)
     Post changePostStatus(int post_id);
->>>>>>> master
 
 }
