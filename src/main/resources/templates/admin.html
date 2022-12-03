@@ -10,39 +10,56 @@
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
 
-    <title>Blog</title>
-</head>
-<body>
-<div class="container">
-    <div class="row m-4">
-        <div class="col text-center border border-dark">
-            <h1><a href="/" class="text-dark">Admin</a></h1>
-        </div>
-    </div>
-    <div class="row m-4 border border-dark">
-        <div class="col text-center m-3">
-            <a href="/">Home</a>
-        </div>
-        <div class="col text-center m-3">
-            <a href="content">Content</a>
-        </div>
-        <div class="col text-center m-3">
-            <a href="writePost">Write Post</a>
-        </div>
-        <div class="col text-center m-3">
-            <a href="login">Login</a>
-        </div>
-        <div class="col text-center m-3">
-            <a href="adminReview">Review Post</a>
-        </div>
-    </div>
+    <style>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+        }
+        li {
+            float: left;
+        }
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        /* Change the link color to #111 (black) on hover */
+        li a:hover {
+            background-color: #111111;
+        }
+        .active {
+            background-color: #04AA6D;
+        }
+    </style>
 
-    <div class="w-100 p-3">
+    <title>Blog</title>
+
+</head>
+    <div class="row m-4">
+    <h1>Admin</h1>
+    </div>
+    <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/content">Content</a></li>
+    <li><a href = "writePost">Write Post</a></li>
+    <li><a href="adminReview">Admin Review</a></li>
+    <li style="float:right"><a href="login">Login</a></li>
+    </ul>
+
+<body>
+
+    <div class="col text-center m-3">
         <table class="table table-striped">
             <thead>
             <tr>
                 <th>ID</th>
                 <th>Title</th>
+                <th>Content</th>
                 <th>Date Created</th>
                 <th>Expiration Date</th>
                 <th>Edit</th>
@@ -50,27 +67,17 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="pending : ${pendings}">
-                <td th:text="${pending.post_id}">Post ID</td>
-                <td th:text="${pending.title}" >Post Title</td>
-                <td th:text="${pending.content}" >Post Content</td>
-                <td th:text="${pending.created_date}" >Creation Date</td>
-                <td th:text="${pending.expiration_date}" >Expiration Date</td>
-                <td><a href="#" th:href="@{/editPost(post_id=${pending.post_id})}">Edit</a></td>
-                <td><a href="#" th:href="@{/deletePost(post_id=${pending.post_id})}">Delete</a></td>
-
+            <tr th:each="post : ${posts}">
+                <td th:text="${post.post_id}">Post ID</td>
+                <td th:text="${post.title}" >Post Title</td>
+                <td th:text="${post.content}" >Post Content</td>
+                <td th:text="${post.created_date}" >Creation Date</td>
+                <td th:text="${post.expiration_date}" >Expiration Date</td>
+                <td><a href="#" th:href="@{/editPost(post_id=${post.post_id})}">Edit</a></td>
+                <td><a href="#" th:href="@{/deletePost(post_id=${post.post_id})}">Delete</a></td>
             </tr>
             </tbody>
         </table>
-    </div>
-
-
-
-
-
-
-
-
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
