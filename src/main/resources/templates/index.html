@@ -33,7 +33,7 @@
                 background-color: #111111;
             }
             .active {
-                background-color: #04AA6D;
+                background-color: #621123;
             }
             tr td {
                 display: block;
@@ -47,7 +47,7 @@
     <h1>Blog</h1>
 </div>
 <ul>
-    <li><a href="/">Home</a></li>
+    <li><a class="active" href="/">Home</a></li>
     <li><a href="/content">Content</a></li>
     <li style="float:right"><a href="/login">Login</a></li>
 </ul>
@@ -60,7 +60,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="post : ${posts}">
+        <tr th:each="post : ${recentPosts}">
             <td th:text="${post.title} + ' ' + ${post.created_date}">Title - Created_Date</td>
             <td th:text="${post.content}">Content</td>
         </tr>
