@@ -1,13 +1,11 @@
 package com.ContentMgtSystem.Blog.controllers;
 
 import com.ContentMgtSystem.Blog.entities.Post;
-import com.ContentMgtSystem.Blog.entities.Post_Status;
 import com.ContentMgtSystem.Blog.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Optional;
 
@@ -76,7 +74,8 @@ public class MainController {
         // and post_status table when running that way
         // Here we want to update the post itself so the FK status_id on the post changes
         //post.getPost_status().setStatus_name("approved");
-        postRepository.updatePostStatus(post_id);
+        // confirmed below updates correct table, setPost_status method from Post entity take post_status param
+        post.setPost_status(post_statusRepository.findById(2).orElse(null));
 
         postRepository.save(post);
 

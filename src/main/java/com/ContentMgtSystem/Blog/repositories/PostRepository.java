@@ -37,8 +37,4 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
             " ON p.status_id = ps.status_id" +
             " WHERE ps.status_name = 'pending';", nativeQuery = true)
     List<Post> findAllByPending();
-
-    // Adding this for example on get method works for approvePost
-    @Query(value = "UPDATE post SET status_id = 2 WHERE post_id = ?", nativeQuery = true)
-    Post updatePostStatus(Integer post_id);
 }
