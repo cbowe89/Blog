@@ -29,4 +29,27 @@ public class MainController {
         return "index";
     }
 
+    @GetMapping("/writePost")
+    public String writePost() {
+        return "writePost";
+    }
+
+    @GetMapping("/admin")
+    public String adminPage(Model model){
+        model.addAttribute("pendings",postRepository.findAllByPending());
+        return "admin";
+    }
+
+    @GetMapping("deletePost")
+    public String deletePost(int post_id){
+        postRepository.deleteById(post_id);
+        return "redirect:/admin";
+    }
+
+    @GetMapping("approvePost")
+    public String approvePost(int post_id){
+        postRepository.changePostStatus(post_id);
+        return "redirect:/admin";
+    }
+
 }
