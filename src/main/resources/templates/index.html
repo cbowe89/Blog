@@ -10,63 +10,107 @@
               integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
               crossorigin="anonymous">
 
-        <style>
-            ul {
-                list-style-type: none;
-                margin: 0;
-                padding: 0;
-                overflow: hidden;
-                background-color: #333;
-            }
-            li {
-                float: left;
-            }
-            li a {
-                display: block;
-                color: white;
-                text-align: center;
-                padding: 14px 16px;
-                text-decoration: none;
-            }
-            /* Change the link color to #111 (black) on hover */
-            li a:hover {
-                background-color: #111111;
-            }
-            .active {
-                background-color: #621123;
-            }
-            tr td {
-                display: block;
-            }
-        </style>
+<!--        <style>-->
+<!--            ul {-->
+<!--                list-style-type: none;-->
+<!--                margin: 0;-->
+<!--                padding: 0;-->
+<!--                overflow: hidden;-->
+<!--                background-color: #333;-->
+<!--            }-->
+<!--            li {-->
+<!--                float: left;-->
+<!--            }-->
+<!--            li a {-->
+<!--                display: block;-->
+<!--                color: white;-->
+<!--                text-align: center;-->
+<!--                padding: 14px 16px;-->
+<!--                text-decoration: none;-->
+<!--            }-->
+<!--            /* Change the link color to #111 (black) on hover */-->
+<!--            li a:hover {-->
+<!--                background-color: #111111;-->
+<!--            }-->
+<!--            .active {-->
+<!--                background-color: #621123;-->
+<!--            }-->
+<!--            tr td {-->
+<!--                display: block;-->
+<!--            }-->
+<!--        </style>-->
 
         <title>Blog</title>
     </head>
     <body>
-        <div class="row m-4">
-            <h1>Blog</h1>
+    <nav class="navbar navbar-expand-lg bg-dark">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active text-light" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/content">Content</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/login">Login</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <ul>
-            <li><a class="active" href="/">Home</a></li>
-            <li><a href="/content">Content</a></li>
-            <li style="float:right"><a href="/login">Login</a></li>
-        </ul>
+    </nav>
+    <div class="row m-4">
+        <h1>Welcome to Your Content Management System</h1>
+    </div>
+    <div class="w-100 py-3">
+        <table class="table">
+            <thead>
+                <tr class="bg-info">
+                    <th>Newest Update</th>
+                    <th>Post Information</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="post : ${recentPosts}">
+                    <td th:text="${post.title} + ' ' + ${post.created_date}">Title - Created_Date</td>
+                    <td th:text="${post.content}">Content</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-        <div class="row m-4 border border-dark">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Newest Update</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="post : ${recentPosts}">
-                        <td th:text="${post.title} + ' ' + ${post.created_date}">Title - Created_Date</td>
-                        <td th:text="${post.content}">Content</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+
+
+<!--    Previous-->
+<!--        <div class="row m-4">-->
+<!--            <h1>Blog</h1>-->
+<!--        </div>-->
+<!--        <ul>-->
+<!--            <li><a class="active" href="/">Home</a></li>-->
+<!--            <li><a href="/content">Content</a></li>-->
+<!--            <li style="float:right"><a href="/login">Login</a></li>-->
+<!--        </ul>-->
+
+<!--        <div class="row m-4 border border-dark">-->
+<!--            <table class="table">-->
+<!--                <thead>-->
+<!--                    <tr>-->
+<!--                        <th>Newest Update</th>-->
+<!--                    </tr>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                    <tr th:each="post : ${recentPosts}">-->
+<!--                        <td th:text="${post.title} + ' ' + ${post.created_date}">Title - Created_Date</td>-->
+<!--                        <td th:text="${post.content}">Content</td>-->
+<!--                    </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
