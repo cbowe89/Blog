@@ -47,6 +47,14 @@ public class User {
         this.password = password;
     }
 
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -54,11 +62,12 @@ public class User {
         User user = (User) o;
         return user_id == user.user_id
                 && Objects.equals(username, user.username)
-                && Objects.equals(password, user.password);
+                && Objects.equals(password, user.password)
+                && Objects.equals(roles, user.roles);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(user_id, username, password);
+        return Objects.hash(user_id, username, password, roles);
     }
 }
