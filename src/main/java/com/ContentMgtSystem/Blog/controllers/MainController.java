@@ -52,6 +52,30 @@ public class MainController {
         return "writePost";
     }
 
+    @PostMapping("addNewPost")
+    public String addNewPost(Post post, HttpServletRequest request) {
+        int userID = Integer.parseInt(request.getParameter("user_id"));
+        User user = userRepository.findById(userID).get();
+        post.setUser(user);
+
+        // If admin, set status as approved, save post, return to admin page
+        if (user.getRoles().contains(roleRepository.findById(1).get())) {
+            post.setPost_status(post_statusRepository.findById(2).get());
+            postRepository.save(post);
+            return "redirect:/admin";
+        }
+        // If user, set status as pending, save post, return to user page
+        else if (user.getRoles().contains(roleRepository.findById(2).get())) {
+            post.setPost_status(post_statusRepository.findById(1).get());
+            postRepository.save(post);
+            return "redirect:/user";
+        }
+        // If not valid user, do not save post, return to home page
+        else {
+            return "redirect:/";
+        }
+    }
+
     @GetMapping("/admin")
     public String adminPage(Model model){
         // Admin page should display all posts, regardless of status
