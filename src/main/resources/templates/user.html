@@ -54,7 +54,8 @@
                 <td th:text="${userPost.content}" >Post Content</td>
                 <td th:text="${userPost.created_date}" >Creation Date</td>
                 <td th:text="${userPost.expiration_date}" >Expiration Date</td>
-                <td><a href="#" th:href="@{/editPost(post_id=${userPost.post_id})}">Edit</a></td>
+                <td><a href="#"
+                       th:href="@{/editPost(post_id=${userPost.post_id}, user_id=${userPost.user.user_id})}">Edit</a></td>
                 <td><a href="#" th:href="@{/deletePost(post_id=${userPost.post_id})}">Delete</a></td>
 
             </tr>

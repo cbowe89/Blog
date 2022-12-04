@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+
+    <!-- Tiny MCE text editor -->
+    <script src="https://cdn.tiny.cloud/1/87k1mk6hcvc353py9mzcl4d9bhtvebe5w7a3qiei4dee0zgm/tinymce/6/tinymce.min.js"
+            referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#mytextarea',
+            //plugins: 'autoresize',
+            width: 700,
+            height: 400,
+            resize: false,
+            menubar: false
+        });
+    </script>
+
+    <title>Blog</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <h1>Blog</h1>
+    </div>
+    <div class="row">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="content.html">Content</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul>
+    </div>
+
+    <div class="row m-4 border border-dark">
+        <div class="col-7 text-center m-3">
+            <form action="editPost" method="POST">
+                <div class="col-12 m-1 text-center">
+                    <div class="form-group row">
+                        <label for="title" class="col-3 col-form-label">
+                            Title
+                        </label>
+                    </div>
+                    <div class="col-9">
+                        <input type="text" name="Title" id="title" class="form-control"
+                               th:value="${post.title}"/>
+                    </div>
+                    <div class="col-9">
+                        <textarea id="mytextarea" name="content"
+                                  th:value="${post.content}"
+                                  th:text="${post.content}"></textarea>
+                    </div>
+                </div>
+                <input type="hidden" name="post_id" th:value="${post.post_id}"/>
+                <input type="hidden" name="user_id" th:value="${post.user.user_id}"/>
+                <input type="hidden" name="created_date" th:value="${post.created_date}"/>
+                <input type="hidden" name="expiration_date" th:value="${post.expiration_date}"/>
+                <input type="hidden" name="status_id" th:value="${post.post_status.status_id}"/>
+<!--                <input type="hidden" name="tags" th:value="${post.tags}"/>-->
+
+                <button type="submit" class="btn btn-primary">Edit Blog Post</button>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+</body>
+</html>
