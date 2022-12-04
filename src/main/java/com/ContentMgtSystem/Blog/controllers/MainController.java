@@ -51,7 +51,7 @@ public class MainController {
     public String adminPage(Model model){
         // Admin page should display all posts, regardless of status, simply findAll()
         // Admin should be able to view and edit all posts, in addition to changing status
-        model.addAttribute("pendings",postRepository.findAllByPending());
+        model.addAttribute("posts",postRepository.findAll());
         return "admin";
     }
 
