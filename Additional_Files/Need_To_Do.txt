@@ -17,20 +17,21 @@ Admin.html --- Yaren and Sarah
 - admin.html main page - needs table to show pending ++
                         needs table to show all posts with id, title, dates, view, edit, and delete buttons ++
                         header with links to home (index), content, write, logout ++
-- adminReviewPending.html almost done??
-- Approve user posts
+- adminReviewPending.html ++
+- Approve user posts ++
 - Link to write posts ++
 - Edit posts
 - Delete posts ++
 - Link to index (home) ++
-- Link to logout
+- Link to logout ++
 
 User.html --- Andrea
-- Link to write posts
-- Link to content
-- Link to index (home)
-- Display user's personal posts
-- Link to logout
+- Link to write posts DONE
+- Link to content DONE
+- Link to index (home) DONE
+- Display user's personal posts DONE
+- Link to logout DONE
+- Edit and delete functionality
 
 WritePost.html --- Working as group
 - Text editor to write and save new post
