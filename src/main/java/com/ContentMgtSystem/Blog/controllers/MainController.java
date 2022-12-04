@@ -52,7 +52,7 @@ public class MainController {
         return "writePost";
     }
 
-    @PostMapping("addNewPost")
+    @PostMapping("/addNewPost")
     public String addNewPost(Post post, HttpServletRequest request) {
         int userID = Integer.parseInt(request.getParameter("user_id"));
         User user = userRepository.findById(userID).get();
