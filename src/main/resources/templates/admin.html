@@ -10,53 +10,81 @@
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
 
-    <style>
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: #333;
-        }
-        li {
-            float: left;
-        }
-        li a {
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-        /* Change the link color to #111 (black) on hover */
-        li a:hover {
-            background-color: #111111;
-        }
-        .active {
-            background-color: #04AA6D;
-        }
-    </style>
+<!--    <style>-->
+<!--        ul {-->
+<!--            list-style-type: none;-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--            overflow: hidden;-->
+<!--            background-color: #333;-->
+<!--        }-->
+<!--        li {-->
+<!--            float: left;-->
+<!--        }-->
+<!--        li a {-->
+<!--            display: block;-->
+<!--            color: white;-->
+<!--            text-align: center;-->
+<!--            padding: 14px 16px;-->
+<!--            text-decoration: none;-->
+<!--        }-->
+<!--        /* Change the link color to #111 (black) on hover */-->
+<!--        li a:hover {-->
+<!--            background-color: #111111;-->
+<!--        }-->
+<!--        .active {-->
+<!--            background-color: #04AA6D;-->
+<!--        }-->
+<!--    </style>-->
+
 
     <title>Blog</title>
 
 </head>
-    <div class="row m-4">
-    <h1>Admin</h1>
-    </div>
-    <ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="/content">Content</a></li>
-    <li><a href = "writePost">Write Post</a></li>
-    <li><a href="adminReview">Admin Review</a></li>
-    <li style="float:right"><a href="login">Login</a></li>
-    </ul>
+<!--    <div class="row m-4">-->
+<!--    <h1>Admin</h1>-->
+<!--    </div>-->
+<!--    <ul>-->
+<!--    <li><a href="/">Home</a></li>-->
+<!--    <li><a href="/content">Content</a></li>-->
+<!--    <li><a href = "writePost">Write Post</a></li>-->
+<!--    <li><a href="adminReview">Admin Review</a></li>-->
+<!--    <li style="float:right"><a href="login">Login</a></li>-->
+<!--    </ul>-->
 
 <body>
+    <nav class="navbar navbar-expand-lg bg-dark">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active text-light" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/content">Content</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/writePost">Write Post</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/login">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="row m-4">
+        <h1>Admin Dashboard</h1>
+    </div>
 
-    <div class="col text-center m-3">
-        <table class="table table-striped">
+    <div class="w-100 py-3">
+        <table class="table">
             <thead>
-            <tr>
+            <tr class="bg-info">
                 <th>ID</th>
                 <th>Title</th>
                 <th>Content</th>
@@ -78,6 +106,36 @@
             </tr>
             </tbody>
         </table>
+    </div>
+
+
+
+<!--    Previous-->
+<!--    <div class="col text-center m-3">-->
+<!--        <table class="table table-striped">-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--                <th>ID</th>-->
+<!--                <th>Title</th>-->
+<!--                <th>Content</th>-->
+<!--                <th>Date Created</th>-->
+<!--                <th>Expiration Date</th>-->
+<!--                <th>Edit</th>-->
+<!--                <th>Delete</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <tr th:each="post : ${posts}">-->
+<!--                <td th:text="${post.post_id}">Post ID</td>-->
+<!--                <td th:text="${post.title}" >Post Title</td>-->
+<!--                <td th:text="${post.content}" >Post Content</td>-->
+<!--                <td th:text="${post.created_date}" >Creation Date</td>-->
+<!--                <td th:text="${post.expiration_date}" >Expiration Date</td>-->
+<!--                <td><a href="#" th:href="@{/editPost(post_id=${post.post_id})}">Edit</a></td>-->
+<!--                <td><a href="#" th:href="@{/deletePost(post_id=${post.post_id})}">Delete</a></td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--        </table>-->
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
