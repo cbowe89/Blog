@@ -4,9 +4,14 @@ import com.ContentMgtSystem.Blog.entities.Post;
 import com.ContentMgtSystem.Blog.entities.Post_Status;
 import com.ContentMgtSystem.Blog.entities.User;
 import com.ContentMgtSystem.Blog.repositories.*;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -115,4 +120,28 @@ public class MainController {
         return "redirect:/user?user_id=" + user_id;
     }
 
+    //Login page and logging in
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String performLogin(User user, HttpServletResponse response) {
+        String username = user.getUsername();
+        String password = user.getPassword();
+        User userFromDatabase = userRepository.findByUsername(username);
+        if (!password.equals(userFromDatabase.getPassword())) {
+            return "redirect:/login";
+        }
+        Cookie jwtTokenCookie = new Cookie("user_id", String.valueOf(userFromDatabase.getUser_id()));
+        jwtTokenCookie.setMaxAge(86400);
+        jwtTokenCookie.setSecure(true);
+        jwtTokenCookie.setHttpOnly(true);
+        jwtTokenCookie.setDomain("");
+
+        response.addCookie(jwtTokenCookie);
+        return "redirect:/";
+    }
 }
