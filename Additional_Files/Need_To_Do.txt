@@ -26,11 +26,12 @@ Admin.html --- Yaren and Sarah
 - Link to logout ++
 
 User.html --- Andrea
-- Link to write posts
-- Link to content
-- Link to index (home)
-- Display user's personal posts
-- Link to logout
+- Link to write posts DONE
+- Link to content DONE
+- Link to index (home) DONE
+- Display user's personal posts DONE
+- Link to logout DONE
+- Edit and delete functionality
 
 WritePost.html --- Working as group
 - Text editor to write and save new post
