@@ -88,9 +88,9 @@ public class MainController {
         post.setCreated_date(Timestamp.valueOf(LocalDateTime.now()));
 
         // If expiration date is set, change from String to Timestamp and set
-        String htmlDateTime = request.getParameter("timestamp");
-        if (!htmlDateTime.equals("")) {
-            String dateTimeString = htmlDateTime.replace("T", " ");
+        String htmlExpDate = request.getParameter("htmlExpDate");
+        if (!htmlExpDate.equals("")) {
+            String dateTimeString = htmlExpDate.replace("T", " ");
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             Timestamp timestamp = Timestamp.valueOf(LocalDateTime.parse(dateTimeString, formatter));
             post.setExpiration_date(timestamp);
