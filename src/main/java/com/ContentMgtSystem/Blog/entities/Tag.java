@@ -17,12 +17,12 @@ public class Tag {
     @ManyToMany(mappedBy = "tags")
     private List<Post> posts;
 
-    public int getTag_id() {
+    public int getId() {
         return tag_id;
     }
 
-    public void setTag_id(int tag_id) {
-        this.tag_id = tag_id;
+    public void setId(int id) {
+        this.tag_id = id;
     }
 
     public String getTag() {
