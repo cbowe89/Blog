@@ -10,6 +10,11 @@
               integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
               crossorigin="anonymous">
 
+        <!-- For tags -->
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/tagmanager/3.0.2/tagmanager.min.css">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tagmanager/3.0.2/tagmanager.min.js"></script>
+
         <!-- Tiny MCE text editor -->
         <script src="https://cdn.tiny.cloud/1/87k1mk6hcvc353py9mzcl4d9bhtvebe5w7a3qiei4dee0zgm/tinymce/6/tinymce.min.js"
                 referrerpolicy="origin"></script>
@@ -38,6 +43,7 @@
                 },
             });
         </script>
+
         <title>Blog</title>
     </head>
 
@@ -84,15 +90,24 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                        <label for="tagsFromHtml" class="col-1 col-form-label">Hashtags</label>
+                        <input type="text" name="tagsFromHtml" id="tagsFromHtml"
+                               placeholder="Enter tags (comma separated)"
+                               class="col-12 form-control tm-input tm-input-info"/>
+                    </div>
+                    <div class="form-group row">
                         <label for="htmlExpDate" class="col-1 col-form-label">Expiration Date</label>
                         <input type="datetime-local" class="col-3 form-control" name="htmlExpDate"
                                id="htmlExpDate"/>
                     </div>
-
                     <button type="submit" class="btn btn-primary">Create Blog Post</button>
                 </form>
             </div>
         </div>
+
+        <script type="text/javascript">
+            $(".tm-input").tagsManager();
+        </script>
 
 <!--        <div class="container-fluid">-->
 <!--            <h1>Write A New Post</h1>-->
