@@ -72,15 +72,19 @@
             <hr>
             <form action="addNewPost" method="post">
                 <div class="form-group row">
-                    <label for="title" class="col col-form-label">Title</label>
-                    <input type="text" class="col-11 form-control" id="title" placeholder="Post Title" required/>
+                    <label for="title" class="col-1 col-form-label">Title</label>
+                    <input type="text" class="col-3 form-control" id="title" placeholder="Post Title" required/>
                 </div>
                 <div class="form-group">
                     <textarea class="form-control" id="content" placeholder="Start a new post..." required></textarea>
                 </div>
                 <div class="form-group row">
-                    <label for="expiration_date" class="col-3 col-form-label">Expiration Date</label>
-                    <input type="datetime-local" class="col-9 form-control"
+                    <label for="tag" class="col-1 col-form-label">Hashtags</label>
+                    <input type="text" class="col-3 form-control" id="tag" placeholder="#EnterHashtags">
+                </div>
+                <div class="form-group row">
+                    <label for="expiration_date" class="col-1 col-form-label">Expiration Date</label>
+                    <input type="datetime-local" class="col-3 form-control"
                            id="expiration_date" placeholder="Expiration Date"/>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
