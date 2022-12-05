@@ -2,6 +2,7 @@ package com.ContentMgtSystem.Blog.controllers;
 
 import com.ContentMgtSystem.Blog.entities.Post;
 import com.ContentMgtSystem.Blog.entities.Post_Status;
+import com.ContentMgtSystem.Blog.entities.Role;
 import com.ContentMgtSystem.Blog.entities.User;
 import com.ContentMgtSystem.Blog.repositories.*;
 import jakarta.servlet.http.Cookie;
@@ -54,9 +55,20 @@ public class MainController {
 
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("recentPosts",
-                postRepository.findAllPostsDescWithLimit());
-        return "index";
+        return "homepage";
+    }
+
+    @GetMapping("/navBar")
+    public String nav(Model model, HttpServletRequest request) {
+        Optional<String> userCookie = fetchCookie(request);
+        int user_id = Integer.parseInt(userCookie.get());
+        User user = userRepository.findById(user_id).get();
+        boolean isAdmin = false;
+        if (user.getRoles().contains(roleRepository.findById(1).get())) {
+            isAdmin = true;
+        }
+        model.addAttribute("isAdmin", isAdmin);
+        return "navBar";
     }
 
     @GetMapping("/content")
