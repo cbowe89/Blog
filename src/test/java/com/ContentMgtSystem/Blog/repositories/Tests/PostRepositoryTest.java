@@ -3,15 +3,20 @@ package com.ContentMgtSystem.Blog.repositories.Tests;
 import com.ContentMgtSystem.Blog.TestApplicationConfiguration;
 import com.ContentMgtSystem.Blog.entities.*;
 import com.ContentMgtSystem.Blog.repositories.*;
-import jakarta.transaction.Transactional;
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -22,6 +27,7 @@ import static org.junit.Assert.*;
 @SpringBootTest(classes = TestApplicationConfiguration.class)
 @Transactional
 public class PostRepositoryTest {
+
     @Autowired
     PostRepository postRepository;
 
@@ -46,7 +52,7 @@ public class PostRepositoryTest {
     }
 
     @Test
-    public void findByUser() {
+    public void testFindByUser() {
         User user1 = new User();
         user1.setUsername("Test1");
         user1.setPassword("TestPass1");
@@ -63,20 +69,13 @@ public class PostRepositoryTest {
         userRepository.save(user3);
 
         List<User> listOfUsers = userRepository.findAll();
-
-        Role role = new Role();
-        role.setRole_name("admin");
-        role.setUsers(listOfUsers);
-        roleRepository.save(role);
-
-        List<User> allFromRole = roleRepository.findById(role.getRole_id()).get().getUsers();
-
-        Assertions.assertNotNull(allFromRole);
-        Assertions.assertEquals(3, allFromRole.size());
+        Assertions.assertNotNull(listOfUsers);
+        Assertions.assertEquals(3, listOfUsers.size());
     }
 
+
     @Test
-    public void findAllPostsDescWithLimit(){
+    public void testFindAllPostsDescWithLimit(){
         // creating test post 1
         User user1 = new User();
         user1.setUsername("Test1");
@@ -89,10 +88,6 @@ public class PostRepositoryTest {
         Timestamp newTimeStamp1 = Timestamp.valueOf(testTimestampCreated);
         String testTimestampExpiration = "2022-08-09 10:10:10";
         Timestamp newTimeStamp2 = Timestamp.valueOf(testTimestampExpiration);
-
-        Post_Status post_status = new Post_Status();
-        post_status.setStatus_name("pending");
-        post_statusRepository.save(post_status);
 
         Tag tag1 = new Tag();
         tag1.setTag("TestTag1");
@@ -109,7 +104,8 @@ public class PostRepositoryTest {
         post.setContent(content);
         post.setCreated_date(newTimeStamp1);
         post.setExpiration_date(newTimeStamp2);
-        post.setPost_status(post_status);
+        post.setPost_status(post_statusRepository.findById(2).get());
+
         post.setTags(allTags);
 
         postRepository.save(post);
@@ -128,10 +124,6 @@ public class PostRepositoryTest {
         String testTimestampExpiration2 = "2022-08-09 10:10:10";
         Timestamp newTimeStamp22 = Timestamp.valueOf(testTimestampExpiration2);
 
-        Post_Status post_status2 = new Post_Status();
-        post_status2.setStatus_name("pending");
-        post_statusRepository.save(post_status2);
-
         Tag tag12 = new Tag();
         tag12.setTag("TestTag12");
         tagRepository.save(tag12);
@@ -147,7 +139,8 @@ public class PostRepositoryTest {
         post2.setContent(content2);
         post2.setCreated_date(newTimeStamp12);
         post2.setExpiration_date(newTimeStamp22);
-        post2.setPost_status(post_status2);
+        post2.setPost_status(post_statusRepository.findById(2).get());
+
         post2.setTags(allTags2);
 
         postRepository.save(post2);
@@ -179,10 +172,6 @@ public class PostRepositoryTest {
         String testTimestampExpiration = "2022-08-09 10:10:10";
         Timestamp newTimeStamp2 = Timestamp.valueOf(testTimestampExpiration);
 
-        Post_Status post_status = new Post_Status();
-        post_status.setStatus_name("pending");
-        post_statusRepository.save(post_status);
-
         Tag tag1 = new Tag();
         tag1.setTag("TestTag1");
         tagRepository.save(tag1);
@@ -198,7 +187,8 @@ public class PostRepositoryTest {
         post.setContent(content);
         post.setCreated_date(newTimeStamp1);
         post.setExpiration_date(newTimeStamp2);
-        post.setPost_status(post_status);
+        
+        post.setPost_status(post_statusRepository.findById(2).get());
         post.setTags(allTags);
 
         postRepository.save(post);
@@ -217,10 +207,6 @@ public class PostRepositoryTest {
         String testTimestampExpiration2 = "2022-08-09 10:10:10";
         Timestamp newTimeStamp22 = Timestamp.valueOf(testTimestampExpiration2);
 
-        Post_Status post_status2 = new Post_Status();
-        post_status2.setStatus_name("pending");
-        post_statusRepository.save(post_status2);
-
         Tag tag12 = new Tag();
         tag12.setTag("TestTag12");
         tagRepository.save(tag12);
@@ -236,7 +222,9 @@ public class PostRepositoryTest {
         post2.setContent(content2);
         post2.setCreated_date(newTimeStamp12);
         post2.setExpiration_date(newTimeStamp22);
-        post2.setPost_status(post_status2);
+
+        post2.setPost_status(post_statusRepository.findById(2).get());
+
         post2.setTags(allTags2);
 
         postRepository.save(post2);
@@ -253,13 +241,11 @@ public class PostRepositoryTest {
 
         Assertions.assertEquals(2, listOfPost.size());
         List<Post> listOfPostDescending = postRepository.findAllOrderByCreated_dateDesc();
-        //TODO
-        //Tests pass without the next line, however there's an error in the post status db model (no auto-increment)
-//        Assertions.assertEquals(2, listOfPostDescending.size());
+        Assertions.assertEquals(2, listOfPostDescending.size());
     }
 
     @Test
-    public void findAllByPending() {
+    public void findAllByPending(){
         // creating test post 1
         User user1 = new User();
         user1.setUsername("Test1");
@@ -272,10 +258,6 @@ public class PostRepositoryTest {
         Timestamp newTimeStamp1 = Timestamp.valueOf(testTimestampCreated);
         String testTimestampExpiration = "2022-08-09 10:10:10";
         Timestamp newTimeStamp2 = Timestamp.valueOf(testTimestampExpiration);
-
-        Post_Status post_status = new Post_Status();
-        post_status.setStatus_name("pending");
-        post_statusRepository.save(post_status);
 
         Tag tag1 = new Tag();
         tag1.setTag("TestTag1");
@@ -292,7 +274,8 @@ public class PostRepositoryTest {
         post.setContent(content);
         post.setCreated_date(newTimeStamp1);
         post.setExpiration_date(newTimeStamp2);
-        post.setPost_status(post_status);
+        post.setPost_status(post_statusRepository.findById(1).get());
+
         post.setTags(allTags);
 
         postRepository.save(post);
@@ -311,10 +294,6 @@ public class PostRepositoryTest {
         String testTimestampExpiration2 = "2022-08-09 10:10:10";
         Timestamp newTimeStamp22 = Timestamp.valueOf(testTimestampExpiration2);
 
-        Post_Status post_status2 = new Post_Status();
-        post_status2.setStatus_name("approved");
-        post_statusRepository.save(post_status2);
-
         Tag tag12 = new Tag();
         tag12.setTag("TestTag12");
         tagRepository.save(tag12);
@@ -330,7 +309,8 @@ public class PostRepositoryTest {
         post2.setContent(content2);
         post2.setCreated_date(newTimeStamp12);
         post2.setExpiration_date(newTimeStamp22);
-        post2.setPost_status(post_status2);
+        post2.setPost_status(post_statusRepository.findById(2).get());
+
         post2.setTags(allTags2);
 
         postRepository.save(post2);
@@ -345,5 +325,7 @@ public class PostRepositoryTest {
         Assertions.assertNotNull(listOfPostWithLimit);
         Assertions.assertEquals(1, listOfPostWithLimit.size());
         Assertions.assertTrue(listOfPostWithLimit.contains(post));
+
     }
+
 }

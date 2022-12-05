@@ -1,93 +1,135 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-          crossorigin="anonymous">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+              integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+              crossorigin="anonymous">
 
-    <!-- Tiny MCE text editor -->
-    <script src="https://cdn.tiny.cloud/1/87k1mk6hcvc353py9mzcl4d9bhtvebe5w7a3qiei4dee0zgm/tinymce/6/tinymce.min.js"
-            referrerpolicy="origin"></script>
-    <script>
-        tinymce.init({
-            selector: '#mytextarea',
-            //plugins: 'autoresize',
-            width: 700,
-            height: 400,
-            resize: false,
-            menubar: false
-        });
-    </script>
+        <!-- Tiny MCE text editor -->
+        <script src="https://cdn.tiny.cloud/1/87k1mk6hcvc353py9mzcl4d9bhtvebe5w7a3qiei4dee0zgm/tinymce/6/tinymce.min.js"
+                referrerpolicy="origin"></script>
+        <script>
+            tinymce.init({
+                selector: 'textarea',
+                skin: 'bootstrap',
+                plugins: 'lists, link, image, media',
+                toolbar: 'h1 h2 bold italic strikethrough blockquote bullist numlist backcolor |' +
+                    'link image media | removeformat help',
+                menubar: false,
+                setup: (editor) => {
+                    // Apply the focus effect
+                    editor.on("init", () => {
+                        editor.getContainer().style.transition =
+                            "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out";
+                    });
+                    editor.on("focus", () => { (editor.getContainer().style.boxShadow =
+                        "0 0 0 .2rem rgba(0, 123, 255, .25)"),
+                        (editor.getContainer().style.borderColor = "#80bdff");
+                    });
+                    editor.on("blur", () => {
+                        (editor.getContainer().style.boxShadow = ""),
+                            (editor.getContainer().style.borderColor = "");
+                    });
+                },
+            });
+        </script>
+        <title>Blog</title>
+    </head>
 
-    <title>Blog</title>
-</head>
-<body>
+    <body>
+        <nav class="navbar navbar-expand-lg bg-dark">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active text-light" aria-current="page" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="/content">Content</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="/writePost">Write Post</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="/login">Login</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
 
-    <nav class="navbar navbar-expand-lg bg-dark">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active text-light" aria-current="page" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="/content">Content</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="/writePost">Write Post</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="/login">Login</a>
-                    </li>
-                </ul>
+        <div class="row m-4 border border-dark">
+            <div class="col-7 text-center m-3">
+                <form action="addNewPost" method="POST">
+                    <div class="col-12 m-1 text-center">
+                        <div class="form-group row">
+                            <label for="title" class="col-3 col-form-label">
+                                Title
+                            </label>
+                        </div>
+                        <div class="col-9">
+                            <input type="text" name="title" id="title" class="form-control"/>
+                        </div>
+                        <div class="col-9">
+                            <textarea id="textarea" name="content"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="htmlExpDate" class="col-1 col-form-label">Expiration Date</label>
+                        <input type="datetime-local" class="col-3 form-control" name="htmlExpDate"
+                               id="htmlExpDate"/>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Create Blog Post</button>
+                </form>
             </div>
         </div>
-    </nav>
 
-    <div class="row m-4">
-        <h1>Write a Post</h1>
-    </div>
+<!--        <div class="container-fluid">-->
+<!--            <h1>Write A New Post</h1>-->
+<!--            <hr>-->
+<!--            <form action="addNewPost" method="POST">-->
+<!--                <div class="form-group row">-->
+<!--                    <label for="title" class="col-1 col-form-label">Title</label>-->
+<!--                    <input type="text" name="title" class="col-3 form-control" id="title"-->
+<!--                           placeholder="Post Title" required/>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <textarea class="form-control" name="content" id="mytextarea"-->
+<!--                              placeholder="Start a new post..." required></textarea>-->
+<!--                </div>-->
+<!--                <div class="form-group row">-->
+<!--                    <label for="tag" class="col-1 col-form-label">Hashtags</label>-->
+<!--                    <input type="text" class="col-3 form-control" id="tag" placeholder="#EnterHashtags">-->
+<!--                </div>-->
+<!--                <div class="form-group row">-->
+<!--                    <label for="expiration_date" class="col-1 col-form-label">Expiration Date</label>-->
+<!--                    <input type="datetime-local" class="col-3 form-control"-->
+<!--                           id="expiration_date" placeholder="Expiration Date"/>-->
+<!--                </div>-->
+<!--                <button type="submit" class="btn btn-primary">Submit</button>-->
+<!--            </form>-->
+<!--        </div>-->
 
-    <div class="row m-4 border border-dark">
-        <div class="col-7 text-center m-3">
-            <form action="addPost" method="POST">
-                <div class="col-12 m-1 text-center">
-                    <div class="form-group row">
-                        <label for="title" class="col-3 col-form-label">
-                            Title
-                        </label>
-                    </div>
-                    <div class="col-9">
-                        <input type="text" name="Title" id="title" class="form-control"/>
-                    </div>
-                    <div class="col-9">
-                        <textarea id="mytextarea">Start new post...</textarea>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Add Blog Post</button>
-            </form>
-        </div>
-    </div>
-
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
-</body>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+                integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+                crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+                integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+                crossorigin="anonymous"></script>
+    </body>
 </html>

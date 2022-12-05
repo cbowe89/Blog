@@ -17,11 +17,11 @@ public class Tag {
     @ManyToMany(mappedBy = "tags")
     private List<Post> posts;
 
-    public int getId() {
+    public int getTag_id() {
         return tag_id;
     }
 
-    public void setId(int tag_id) {
+    public void setTag_id(int tag_id) {
         this.tag_id = tag_id;
     }
 
@@ -33,11 +33,11 @@ public class Tag {
         this.tag = tag;
     }
 
-    public List<Post> getBlogPosts() {
+    public List<Post> getPosts() {
         return posts;
     }
 
-    public void setBlogPosts(List<Post> posts) {
+    public void setPosts(List<Post> posts) {
         this.posts = posts;
     }
 

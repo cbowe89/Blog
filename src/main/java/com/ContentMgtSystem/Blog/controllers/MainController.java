@@ -18,6 +18,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -71,9 +74,27 @@ public class MainController {
 
     @PostMapping("/addNewPost")
     public String addNewPost(Post post, HttpServletRequest request) {
-        int userID = Integer.parseInt(request.getParameter("user_id"));
-        User user = userRepository.findById(userID).get();
+        Optional<String> userCookie = fetchCookie(request);
+        if (userCookie.isEmpty()) {
+            return "redirect:/login";
+        }
+
+        // Get user object based on cookie, set User for post
+        int user_id = Integer.parseInt(userCookie.get());
+        User user = userRepository.findById(user_id).get();
         post.setUser(user);
+
+        // Set created date as date post is submitted
+        post.setCreated_date(Timestamp.valueOf(LocalDateTime.now()));
+
+        // If expiration date is set, change from String to Timestamp and set
+        String htmlExpDate = request.getParameter("htmlExpDate");
+        if (!htmlExpDate.equals("")) {
+            String dateTimeString = htmlExpDate.replace("T", " ");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            Timestamp timestamp = Timestamp.valueOf(LocalDateTime.parse(dateTimeString, formatter));
+            post.setExpiration_date(timestamp);
+        }
 
         // If admin, set status as approved, save post, return to admin page
         if (user.getRoles().contains(roleRepository.findById(1).get())) {
