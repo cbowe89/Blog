@@ -14,39 +14,38 @@
 </head>
 <body>
     <div th:replace="fragments/navbar :: nav"></div>
-    <div class="row m-4">
-        <h1>Your Content</h1>
+    <div class="container-fluid w-75 d-flex flex-column align-items-center">
+        <div class="row m-4">
+            <h1>Your Content</h1>
+        </div>
+
+        <div class="w-100 py-3">
+            <table class="table">
+                <thead>
+                <tr class="bg-info">
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Content</th>
+                    <th>Date Created</th>
+                    <th>Expiration Date</th>
+                    <th>Edit</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="userPost : ${userPosts}">
+                    <td th:text="${userPost.post_id}">Post ID</td>
+                    <td th:text="${userPost.title}" >Post Title</td>
+                    <td th:text="${userPost.content}" >Post Content</td>
+                    <td th:text="${userPost.created_date}" >Creation Date</td>
+                    <td th:text="${userPost.expiration_date}" >Expiration Date</td>
+                    <td><a href="#"
+                           th:href="@{/editPost(post_id=${userPost.post_id})}">Edit</a></td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-
-    <div class="w-100 py-3">
-        <table class="table">
-            <thead>
-            <tr class="bg-info">
-                <th>ID</th>
-                <th>Title</th>
-                <th>Content</th>
-                <th>Date Created</th>
-                <th>Expiration Date</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="userPost : ${userPosts}">
-                <td th:text="${userPost.post_id}">Post ID</td>
-                <td th:text="${userPost.title}" >Post Title</td>
-                <td th:text="${userPost.content}" >Post Content</td>
-                <td th:text="${userPost.created_date}" >Creation Date</td>
-                <td th:text="${userPost.expiration_date}" >Expiration Date</td>
-                <td><a href="#"
-                       th:href="@{/editPost(post_id=${userPost.post_id})}">Edit</a></td>
-                <td><a href="#" th:href="@{/deletePost(post_id=${userPost.post_id})}">Delete</a></td>
-
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
 
 
 

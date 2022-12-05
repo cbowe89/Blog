@@ -53,22 +53,31 @@ public class MainController {
                 .findAny();
     }
 
-    @GetMapping("/")
-    public String index(Model model) {
-        return "homepage";
-    }
-
-    @GetMapping("/navBar")
-    public String nav(Model model, HttpServletRequest request) {
+    private String navDisplay(Model model, HttpServletRequest request) {
         Optional<String> userCookie = fetchCookie(request);
+        if (!userCookie.isPresent()) {
+            return "redirect:/login";
+        }
         int user_id = Integer.parseInt(userCookie.get());
         User user = userRepository.findById(user_id).get();
-        boolean isAdmin = false;
-        if (user.getRoles().contains(roleRepository.findById(1).get())) {
-            isAdmin = true;
+        String role = "aUser";
+        if (user.getRoles()
+                .stream()
+                .filter(role1 -> role1.getRole_name().equals("admin")).count() == 1) {
+            role = "anAdmin";
         }
-        model.addAttribute("isAdmin", isAdmin);
-        return "navBar";
+        model.addAttribute("role", role);
+        return "navbar";
+    }
+
+    @GetMapping("/")
+    public String index(HttpServletRequest request, Model model) {
+        Optional<String> userCookie = fetchCookie(request);
+        if (!userCookie.isPresent()) {
+            return "redirect:/login";
+        }
+        navDisplay(model, request);
+        return "homepage";
     }
 
     @GetMapping("/content")

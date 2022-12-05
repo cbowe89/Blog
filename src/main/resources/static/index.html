@@ -45,52 +45,11 @@
     <body>
     <div th:replace="fragments/navbar :: nav"></div>
     <div class="row m-4">
-        <h1>Welcome to Your Content Management System</h1>
-    </div>
-    <div class="w-100 py-3">
-        <table class="table">
-            <thead>
-                <tr class="bg-info">
-                    <th>Newest Update</th>
-                    <th>Post Information</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="post : ${recentPosts}">
-                    <td th:text="${post.title} + ' ' + ${post.created_date}">Title - Created_Date</td>
-                    <td th:text="${post.content}">Content</td>
-                </tr>
-            </tbody>
-        </table>
+        <h1>Welcome to Your Blog Content Management System</h1>
     </div>
 
 
 
-<!--    Previous-->
-<!--        <div class="row m-4">-->
-<!--            <h1>Blog</h1>-->
-<!--        </div>-->
-<!--        <ul>-->
-<!--            <li><a class="active" href="/">Home</a></li>-->
-<!--            <li><a href="/content">Content</a></li>-->
-<!--            <li style="float:right"><a href="/login">Login</a></li>-->
-<!--        </ul>-->
-
-<!--        <div class="row m-4 border border-dark">-->
-<!--            <table class="table">-->
-<!--                <thead>-->
-<!--                    <tr>-->
-<!--                        <th>Newest Update</th>-->
-<!--                    </tr>-->
-<!--                </thead>-->
-<!--                <tbody>-->
-<!--                    <tr th:each="post : ${recentPosts}">-->
-<!--                        <td th:text="${post.title} + ' ' + ${post.created_date}">Title - Created_Date</td>-->
-<!--                        <td th:text="${post.content}">Content</td>-->
-<!--                    </tr>-->
-<!--                </tbody>-->
-<!--            </table>-->
-<!--        </div>-->
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

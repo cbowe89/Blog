@@ -15,12 +15,12 @@
     </head>
     <body>
 
-    <div th:replace="fragments/navbar :: nav"></div>
+    <div th:replace="~{fragments/navbar :: nav}"></div>
 
-    <div class="container-fluid w-75">
-    <div class="row m-4">
-        <h1>Welcome to Your Content Management System</h1>
-    </div>
+    <div class="container-fluid w-75 d-flex flex-column align-items-center">
+        <div class="row m-4">
+            <h1>Blog Content Management System</h1>
+        </div>
         <div class="w-100">
             <table class="table table-striped">
                 <thead>

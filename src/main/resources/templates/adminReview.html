@@ -42,29 +42,31 @@
     <body>
     <div th:replace="fragments/navbar :: nav"></div>
 
-    <div class="row m-4">
-        <h1>Admin Review</h1>
-    </div>
-    <div class="w-100 py-3">
-        <table class="table">
-            <thead>
-            <tr class="bg-info">
-                <th>ID</th>
-                <th>Content</th>
-                <th>Approve</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="pending : ${pendings}">
-                <td th:text="${pending.post_id}">Post ID</td>
-                <td th:text="${pending.content}" >Post Content</td>
-                <td><a href="#" th:href="@{/approvePost(post_id=${pending.post_id})}">Approve</a></td>
+    <div class="container-fluid w-75 d-flex flex-column align-items-center">
+        <div class="row m-4">
+            <h1>Admin Review</h1>
+        </div>
+        <div class="w-100 py-3">
+            <table class="table">
+                <thead>
+                <tr class="bg-info">
+                    <th>ID</th>
+                    <th>Content</th>
+                    <th>Approve</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="pending : ${pendings}">
+                    <td th:text="${pending.post_id}">Post ID</td>
+                    <td th:text="${pending.content}" >Post Content</td>
+                    <td><a href="#" th:href="@{/approvePost(post_id=${pending.post_id})}">Approve</a></td>
 
-            </tr>
-            </tbody>
-        </table>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-
+    </div>
 <!-- Previous styling-->
 <!--    <div class="row m-4">-->
 <!--        <h1>Admin Review</h1>-->
