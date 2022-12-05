@@ -90,7 +90,7 @@ public class MainController {
         post.setCreated_date(Timestamp.valueOf(LocalDateTime.now()));
 
         // Set tags
-        String tagsFromHtml = request.getParameter("tags");
+        String tagsFromHtml = request.getParameter("tagsFromHtml");
         if (tagsFromHtml != null) {
             String[] tagArray = tagsFromHtml.split(",");
             List<Tag> thisPostTags = new ArrayList<>();
