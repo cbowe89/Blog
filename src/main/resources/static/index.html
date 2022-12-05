@@ -28,7 +28,7 @@
 <!--                padding: 14px 16px;-->
 <!--                text-decoration: none;-->
 <!--            }-->
-<!--            /* Change the link color to #111111 (black) on hover */-->
+<!--            /* Change the link color to #111 (black) on hover */-->
 <!--            li a:hover {-->
 <!--                background-color: #111111;-->
 <!--            }-->
@@ -44,61 +44,11 @@
     </head>
     <body>
     <div th:replace="fragments/navbar :: nav"></div>
-    <div class="container-fluid w-75 d-flex flex-column align-items-center>
-        <div class="row m-4">
-            <h1>All Posts</h1>
-        </div>
-
-        <div class="w-100 py-3">
-            <table class="table">
-                <thead>
-                <tr class="bg-info">
-                    <th>Title - Created Date</th>
-                    <th>Post Body</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="post : ${posts}">
-                    <td th:text="${post.title} + ' ' + ${post.created_date}">Title - Created_Date</td>
-                    <td th:text="${post.content}">Content</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+    <div class="row m-4">
+        <h1>Welcome to Your Blog Content Management System</h1>
     </div>
 
 
-
-
-<!--    Previous-->
-        <!-- Blog Title -->
-<!--        <div class="row m-4">-->
-<!--            <h1>Blog</h1>-->
-<!--        </div>-->
-
-        <!-- Navigation -->
-<!--        <ul>-->
-<!--            <li><a href="/">Home</a></li>-->
-<!--            <li><a class="active" href="/content">Content</a></li>-->
-<!--            <li style="float:right"><a href="/login">Login</a></li>-->
-<!--        </ul>-->
-
-<!--        &lt;!&ndash; Display all posts, newest to oldest &ndash;&gt;-->
-<!--        <div class="row m-4 border border-dark">-->
-<!--            <table class="table table-striped">-->
-<!--                <thead>-->
-<!--                <tr>-->
-<!--                    <th>All Posts</th>-->
-<!--                </tr>-->
-<!--                </thead>-->
-<!--                <tbody>-->
-<!--                <tr th:each="post : ${posts}">-->
-<!--                    <td th:text="${post.title} + ' ' + ${post.created_date}">Title - Created_Date</td>-->
-<!--                    <td th:text="${post.content}">Content</td>-->
-<!--                </tr>-->
-<!--                </tbody>-->
-<!--            </table>-->
-<!--        </div>-->
 
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->

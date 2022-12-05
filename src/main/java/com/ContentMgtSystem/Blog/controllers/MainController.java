@@ -3,6 +3,7 @@ package com.ContentMgtSystem.Blog.controllers;
 import com.ContentMgtSystem.Blog.entities.Post;
 import com.ContentMgtSystem.Blog.entities.Post_Status;
 import com.ContentMgtSystem.Blog.entities.Tag;
+import com.ContentMgtSystem.Blog.entities.Role;
 import com.ContentMgtSystem.Blog.entities.User;
 import com.ContentMgtSystem.Blog.repositories.*;
 import jakarta.servlet.http.Cookie;
@@ -55,11 +56,31 @@ public class MainController {
                 .findAny();
     }
 
+    private String navDisplay(Model model, HttpServletRequest request) {
+        Optional<String> userCookie = fetchCookie(request);
+        if (!userCookie.isPresent()) {
+            return "redirect:/login";
+        }
+        int user_id = Integer.parseInt(userCookie.get());
+        User user = userRepository.findById(user_id).get();
+        String role = "aUser";
+        if (user.getRoles()
+                .stream()
+                .filter(role1 -> role1.getRole_name().equals("admin")).count() == 1) {
+            role = "anAdmin";
+        }
+        model.addAttribute("role", role);
+        return "navbar";
+    }
+
     @GetMapping("/")
-    public String index(Model model) {
-        model.addAttribute("recentPosts",
-                postRepository.findAllPostsDescWithLimit());
-        return "index";
+    public String index(HttpServletRequest request, Model model) {
+        Optional<String> userCookie = fetchCookie(request);
+        if (!userCookie.isPresent()) {
+            return "redirect:/login";
+        }
+        navDisplay(model, request);
+        return "homepage";
     }
 
     @GetMapping("/content")
