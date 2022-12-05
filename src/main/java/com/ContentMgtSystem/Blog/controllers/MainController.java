@@ -240,4 +240,10 @@ public class MainController {
         response.addCookie(jwtTokenCookie);
         return "redirect:/";
     }
+
+    @GetMapping("/displayContent")
+    public String displayPost(Model model, int post_id){
+        model.addAttribute("post",postRepository.findById(post_id).get());
+        return "displayContent";
+    }
 }

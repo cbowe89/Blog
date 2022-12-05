@@ -68,23 +68,22 @@
     </div>
 </nav>
 <div class="row m-4">
-    <h1>Admin Review</h1>
+    <h1>Display Content</h1>
 </div>
 <div class="w-100 py-3">
     <table class="table">
         <thead>
         <tr class="bg-info">
-            <th>ID</th>
-            <th>Content</th>
-            <th>Approve</th>
+            <th>Created: </th>
+            <th>Post Title</th>
+            <th>Post Content</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="pending : ${pendings}">
-            <td th:text="${pending.post_id}">Post ID</td>
-            <td th:text="${pending.content}" >Post Content</td>
-            <td><a href="#" th:href="@{/approvePost(post_id=${pending.post_id})}">Approve</a></td>
-
+        <tr>
+            <td th:text="${post.created_date}">Post Creation Date</td>
+            <td th:text="${post.title}" >Post Title</td>
+            <td th:text="${post.content}" >Post Content</td>
         </tr>
         </tbody>
     </table>
