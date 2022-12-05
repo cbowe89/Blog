@@ -10,35 +10,6 @@
               integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
               crossorigin="anonymous">
 
-<!--        <style>-->
-<!--            ul {-->
-<!--                list-style-type: none;-->
-<!--                margin: 0;-->
-<!--                padding: 0;-->
-<!--                overflow: hidden;-->
-<!--                background-color: #333;-->
-<!--            }-->
-<!--            li {-->
-<!--                float: left;-->
-<!--            }-->
-<!--            li a {-->
-<!--                display: block;-->
-<!--                color: white;-->
-<!--                text-align: center;-->
-<!--                padding: 14px 16px;-->
-<!--                text-decoration: none;-->
-<!--            }-->
-<!--            /* Change the link color to #111111 (black) on hover */-->
-<!--            li a:hover {-->
-<!--                background-color: #111111;-->
-<!--            }-->
-<!--            .active {-->
-<!--                background-color: #621123;-->
-<!--            }-->
-<!--            tr td {-->
-<!--                display: block;-->
-<!--            }-->
-<!--        </style>-->
 
         <title>Blog</title>
     </head>
@@ -68,60 +39,54 @@
         </div>
     </nav>
     <div class="row m-4">
-        <h1>All Posts</h1>
+        <h1>Log In</h1>
     </div>
+    <div class="col-7 text-center m-3">
+        <form action="login" method="POST">
 
-    <div class="w-100 py-3">
-        <table class="table">
-            <thead>
-            <tr class="bg-info">
-                <th>Title - Created Date</th>
-                <th>Post Body</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="post : ${posts}">
-                <td th:text="${post.title} + ' ' + ${post.created_date}">Title - Created_Date</td>
-                <td th:text="${post.content}">Content</td>
-            </tr>
-            </tbody>
-        </table>
+            <div class="form-group row">
+                <label for="username" class="col-3 col-form-label">Username</label>
+                <div class="col-9">
+                    <input type="text" name="username" id="username" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="password" class="col-3 col-form-label">Password</label>
+                <div class="col-9">
+                    <input type="text" name="password" id="password" class="form-control" />
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Log In</button>
+        </form>
     </div>
-
-
-
 
 
 <!--    Previous-->
-        <!-- Blog Title -->
 <!--        <div class="row m-4">-->
 <!--            <h1>Blog</h1>-->
 <!--        </div>-->
-
-        <!-- Navigation -->
 <!--        <ul>-->
-<!--            <li><a href="/">Home</a></li>-->
-<!--            <li><a class="active" href="/content">Content</a></li>-->
+<!--            <li><a class="active" href="/">Home</a></li>-->
+<!--            <li><a href="/content">Content</a></li>-->
 <!--            <li style="float:right"><a href="/login">Login</a></li>-->
 <!--        </ul>-->
 
-<!--        &lt;!&ndash; Display all posts, newest to oldest &ndash;&gt;-->
 <!--        <div class="row m-4 border border-dark">-->
-<!--            <table class="table table-striped">-->
+<!--            <table class="table">-->
 <!--                <thead>-->
-<!--                <tr>-->
-<!--                    <th>All Posts</th>-->
-<!--                </tr>-->
+<!--                    <tr>-->
+<!--                        <th>Newest Update</th>-->
+<!--                    </tr>-->
 <!--                </thead>-->
 <!--                <tbody>-->
-<!--                <tr th:each="post : ${posts}">-->
-<!--                    <td th:text="${post.title} + ' ' + ${post.created_date}">Title - Created_Date</td>-->
-<!--                    <td th:text="${post.content}">Content</td>-->
-<!--                </tr>-->
+<!--                    <tr th:each="post : ${recentPosts}">-->
+<!--                        <td th:text="${post.title} + ' ' + ${post.created_date}">Title - Created_Date</td>-->
+<!--                        <td th:text="${post.content}">Content</td>-->
+<!--                    </tr>-->
 <!--                </tbody>-->
 <!--            </table>-->
 <!--        </div>-->
-
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
