@@ -51,7 +51,6 @@ public class PostRepositoryTest {
         tagRepository.deleteAll();
     }
 
-
     @Test
     public void testFindByUser() {
         User user1 = new User();
@@ -70,7 +69,6 @@ public class PostRepositoryTest {
         userRepository.save(user3);
 
         List<User> listOfUsers = userRepository.findAll();
-
         Assertions.assertNotNull(listOfUsers);
         Assertions.assertEquals(3, listOfUsers.size());
     }
@@ -91,7 +89,6 @@ public class PostRepositoryTest {
         String testTimestampExpiration = "2022-08-09 10:10:10";
         Timestamp newTimeStamp2 = Timestamp.valueOf(testTimestampExpiration);
 
-
         Tag tag1 = new Tag();
         tag1.setTag("TestTag1");
         tagRepository.save(tag1);
@@ -108,6 +105,7 @@ public class PostRepositoryTest {
         post.setCreated_date(newTimeStamp1);
         post.setExpiration_date(newTimeStamp2);
         post.setPost_status(post_statusRepository.findById(2).get());
+
         post.setTags(allTags);
 
         postRepository.save(post);
@@ -126,7 +124,6 @@ public class PostRepositoryTest {
         String testTimestampExpiration2 = "2022-08-09 10:10:10";
         Timestamp newTimeStamp22 = Timestamp.valueOf(testTimestampExpiration2);
 
-
         Tag tag12 = new Tag();
         tag12.setTag("TestTag12");
         tagRepository.save(tag12);
@@ -143,6 +140,7 @@ public class PostRepositoryTest {
         post2.setCreated_date(newTimeStamp12);
         post2.setExpiration_date(newTimeStamp22);
         post2.setPost_status(post_statusRepository.findById(2).get());
+
         post2.setTags(allTags2);
 
         postRepository.save(post2);
@@ -157,8 +155,6 @@ public class PostRepositoryTest {
         Assertions.assertNotNull(listOfPostWithLimit);
         Assertions.assertEquals(1, listOfPostWithLimit.size());
         Assertions.assertTrue(listOfPostWithLimit.contains(post2));
-
-
     }
 
     @Test
@@ -176,7 +172,6 @@ public class PostRepositoryTest {
         String testTimestampExpiration = "2022-08-09 10:10:10";
         Timestamp newTimeStamp2 = Timestamp.valueOf(testTimestampExpiration);
 
-
         Tag tag1 = new Tag();
         tag1.setTag("TestTag1");
         tagRepository.save(tag1);
@@ -192,6 +187,7 @@ public class PostRepositoryTest {
         post.setContent(content);
         post.setCreated_date(newTimeStamp1);
         post.setExpiration_date(newTimeStamp2);
+        
         post.setPost_status(post_statusRepository.findById(2).get());
         post.setTags(allTags);
 
@@ -211,7 +207,6 @@ public class PostRepositoryTest {
         String testTimestampExpiration2 = "2022-08-09 10:10:10";
         Timestamp newTimeStamp22 = Timestamp.valueOf(testTimestampExpiration2);
 
-
         Tag tag12 = new Tag();
         tag12.setTag("TestTag12");
         tagRepository.save(tag12);
@@ -227,7 +222,9 @@ public class PostRepositoryTest {
         post2.setContent(content2);
         post2.setCreated_date(newTimeStamp12);
         post2.setExpiration_date(newTimeStamp22);
+
         post2.setPost_status(post_statusRepository.findById(2).get());
+
         post2.setTags(allTags2);
 
         postRepository.save(post2);
@@ -244,7 +241,6 @@ public class PostRepositoryTest {
 
         Assertions.assertEquals(2, listOfPost.size());
         List<Post> listOfPostDescending = postRepository.findAllOrderByCreated_dateDesc();
-
         Assertions.assertEquals(2, listOfPostDescending.size());
     }
 
@@ -263,7 +259,6 @@ public class PostRepositoryTest {
         String testTimestampExpiration = "2022-08-09 10:10:10";
         Timestamp newTimeStamp2 = Timestamp.valueOf(testTimestampExpiration);
 
-
         Tag tag1 = new Tag();
         tag1.setTag("TestTag1");
         tagRepository.save(tag1);
@@ -280,6 +275,7 @@ public class PostRepositoryTest {
         post.setCreated_date(newTimeStamp1);
         post.setExpiration_date(newTimeStamp2);
         post.setPost_status(post_statusRepository.findById(1).get());
+
         post.setTags(allTags);
 
         postRepository.save(post);
@@ -298,7 +294,6 @@ public class PostRepositoryTest {
         String testTimestampExpiration2 = "2022-08-09 10:10:10";
         Timestamp newTimeStamp22 = Timestamp.valueOf(testTimestampExpiration2);
 
-
         Tag tag12 = new Tag();
         tag12.setTag("TestTag12");
         tagRepository.save(tag12);
@@ -315,6 +310,7 @@ public class PostRepositoryTest {
         post2.setCreated_date(newTimeStamp12);
         post2.setExpiration_date(newTimeStamp22);
         post2.setPost_status(post_statusRepository.findById(2).get());
+
         post2.setTags(allTags2);
 
         postRepository.save(post2);
@@ -331,6 +327,5 @@ public class PostRepositoryTest {
         Assertions.assertTrue(listOfPostWithLimit.contains(post));
 
     }
-
 
 }
