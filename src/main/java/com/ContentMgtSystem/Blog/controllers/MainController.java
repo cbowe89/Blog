@@ -2,6 +2,7 @@ package com.ContentMgtSystem.Blog.controllers;
 
 import com.ContentMgtSystem.Blog.entities.Post;
 import com.ContentMgtSystem.Blog.entities.Post_Status;
+import com.ContentMgtSystem.Blog.entities.Tag;
 import com.ContentMgtSystem.Blog.entities.User;
 import com.ContentMgtSystem.Blog.repositories.*;
 import jakarta.servlet.http.Cookie;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -86,6 +88,25 @@ public class MainController {
 
         // Set created date as date post is submitted
         post.setCreated_date(Timestamp.valueOf(LocalDateTime.now()));
+
+        // Set tags
+        String tagsFromHtml = request.getParameter("tagsFromHtml");
+        if (tagsFromHtml != null) {
+            String[] tagArray = tagsFromHtml.split(",");
+            List<Tag> thisPostTags = new ArrayList<>();
+            for (String tagString : tagArray) {
+                if (tagRepository.findStringByContent(tagString) == null) {
+                    Tag newTag = new Tag();
+                    newTag.setTag(tagString);
+                    thisPostTags.add(newTag);
+                    tagRepository.save(newTag);
+                }
+                else
+                    thisPostTags.add(tagRepository.findTagByContent(tagString));
+            }
+            if (!thisPostTags.isEmpty())
+                post.setTags(thisPostTags);
+        }
 
         // If expiration date is set, change from String to Timestamp and set
         String htmlExpDate = request.getParameter("htmlExpDate");
