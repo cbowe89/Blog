@@ -84,7 +84,7 @@ public class MainController {
     @GetMapping("/content")
     public String viewAllPosts(HttpServletRequest request, Model model) {
         model.addAttribute("posts",
-                postRepository.findAllOrderByCreated_dateDesc());
+                postRepository.findAllNotExpired());
         navDisplay(model, request);
         return "content";
     }

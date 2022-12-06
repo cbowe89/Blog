@@ -240,7 +240,7 @@ public class PostRepositoryTest {
         }
 
         Assertions.assertEquals(2, listOfPost.size());
-        List<Post> listOfPostDescending = postRepository.findAllOrderByCreated_dateDesc();
+        List<Post> listOfPostDescending = postRepository.findAllNotExpired();
         Assertions.assertEquals(2, listOfPostDescending.size());
     }
 
