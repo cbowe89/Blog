@@ -10,6 +10,12 @@
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
 
+    <!-- For Sort Table -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+
 
     <title>Blog</title>
 
@@ -22,7 +28,7 @@
             <h1>Admin Review</h1>
         </div>
         <div class="w-100 py-3">
-            <table class="table">
+            <table id= "sortTable" class="table">
                 <thead>
                 <tr class="bg-info">
                     <th>ID</th>
@@ -32,7 +38,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="pending : ${pendings}">
-                    <td th:text="${pending.post_id}">Post ID</td>
+                    <td th:text="${pending.created_date}">Post ID</td>
                     <td th:text="${pending.content}" >Post Content</td>
                     <td><a href="#" th:href="@{/approvePost(post_id=${pending.post_id})}">Approve</a></td>
 
@@ -42,6 +48,11 @@
             </table>
         </div>
     </div>
+
+
+    <script>
+        $('#sortTable').DataTable({order: [1,'desc']});
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
