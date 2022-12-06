@@ -38,6 +38,12 @@ public class Post {
             inverseJoinColumns = {@JoinColumn(name = "tag_id")})
     private List<Tag> tags;
 
+    @ManyToMany
+    @JoinTable(name = "post_image",
+            joinColumns = {@JoinColumn(name = "post_id")},
+            inverseJoinColumns = {@JoinColumn(name = "image_id")})
+    private List<Image> images;
+
     public int getPost_id() {
         return post_id;
     }
@@ -102,6 +108,14 @@ public class Post {
         this.tags = tags;
     }
 
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -114,12 +128,12 @@ public class Post {
                 && Objects.equals(created_date, post.created_date)
                 && Objects.equals(expiration_date, post.expiration_date)
                 && Objects.equals(post_status, post.post_status)
-                && Objects.equals(tags, post.tags);
+                && Objects.equals(tags, post.tags)
+                && Objects.equals(images, post.images);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(post_id, user, title, content,
-                created_date, expiration_date, post_status, tags);
+        return Objects.hash(post_id, user, title, content, created_date, expiration_date, post_status, tags, images);
     }
 }
