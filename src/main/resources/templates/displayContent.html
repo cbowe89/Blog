@@ -83,7 +83,7 @@
         <tr>
             <td th:text="${post.created_date}">Post Creation Date</td>
             <td th:text="${post.title}" >Post Title</td>
-            <td th:text="${post.content}" >Post Content</td>
+            <td th:utext="${post.content}" >Post Content</td>
         </tr>
         </tbody>
     </table>
@@ -110,7 +110,7 @@
 <!--            <tbody>-->
 <!--            <tr th:each="pending : ${pendings}">-->
 <!--                <td th:text="${pending.post_id}">Post ID</td>-->
-<!--                <td th:text="${pending.content}" >Post Content</td>-->
+<!--                <td th:utext="${pending.content}" >Post Content</td>-->
 <!--                <td><a href="#" th:href="@{/approvePost(post_id=${pending.post_id})}">Approve</a></td>-->
 
 <!--            </tr>-->
