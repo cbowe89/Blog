@@ -39,7 +39,7 @@
                         <tr th:each="post : ${posts}">
                             <th th:text="${post.created_date}">Created_Date</th>
                             <td th:text="${post.title}">Title</td>
-                            <td th:text="${post.content}">Content</td>
+                            <td th:utext="${post.content}">Content</td>
                             <td>
                                 <span th:each="tag,iterState : ${post.tags}"
                                       th:text="${tag.tag_name} + ${!iterState.last ? ', ' : ''}"></span>

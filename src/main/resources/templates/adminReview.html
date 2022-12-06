@@ -39,7 +39,7 @@
                 <tbody>
                 <tr th:each="pending : ${pendings}">
                     <td th:text="${pending.created_date}">Post ID</td>
-                    <td th:text="${pending.content}" >Post Content</td>
+                    <td th:utext="${pending.content}" >Post Content</td>
                     <td><a href="#" th:href="@{/approvePost(post_id=${pending.post_id})}">Approve</a></td>
 
 

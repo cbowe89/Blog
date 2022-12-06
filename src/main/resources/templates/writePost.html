@@ -17,9 +17,13 @@
             tinymce.init({
                 selector: 'textarea',
                 skin: 'bootstrap',
-                plugins: 'lists, link, image, media',
+                plugins: [
+                    'a11ychecker','advlist','advcode','advtable','autolink','checklist','export',
+                    'lists','link','image','charmap','preview','anchor','searchreplace','visualblocks',
+                    'powerpaste','fullscreen','formatpainter','insertdatetime','table','help','wordcount'
+                ],
                 toolbar: 'h1 h2 bold italic strikethrough blockquote bullist numlist backcolor |' +
-                    'link image media | removeformat help',
+                    'link image | removeformat help',
                 menubar: false,
                 setup: (editor) => {
                     // Apply the focus effect
