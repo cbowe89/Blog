@@ -45,9 +45,9 @@ public class PostRepositoryTest {
 
     @Before
     public void setUp() throws Exception {
+        postRepository.deleteAll();
         userRepository.deleteAll();
         roleRepository.deleteAll();
-        postRepository.deleteAll();
         tagRepository.deleteAll();
     }
 
