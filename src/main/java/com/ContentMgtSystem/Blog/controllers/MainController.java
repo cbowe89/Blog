@@ -58,40 +58,50 @@ public class MainController {
 
     private String navDisplay(Model model, HttpServletRequest request) {
         Optional<String> userCookie = fetchCookie(request);
-        if (!userCookie.isPresent()) {
-            return "redirect:/login";
+        String logInStatus = "out";
+        if (userCookie.isPresent()) {
+            logInStatus = "in";
+            int user_id = Integer.parseInt(userCookie.get());
+            User user = userRepository.findById(user_id).get();
+            String role = "aUser";
+            if (user.getRoles()
+                    .stream()
+                    .filter(role1 -> role1.getRole_name().equals("admin")).count() == 1) {
+                role = "anAdmin";
+            }
+            model.addAttribute("role", role);
         }
-        int user_id = Integer.parseInt(userCookie.get());
-        User user = userRepository.findById(user_id).get();
-        String role = "aUser";
-        if (user.getRoles()
-                .stream()
-                .filter(role1 -> role1.getRole_name().equals("admin")).count() == 1) {
-            role = "anAdmin";
-        }
-        model.addAttribute("role", role);
+        model.addAttribute("logInStatus", logInStatus);
         return "navbar";
     }
 
     @GetMapping("/")
     public String index(HttpServletRequest request, Model model) {
-        Optional<String> userCookie = fetchCookie(request);
-        if (!userCookie.isPresent()) {
-            return "redirect:/login";
-        }
         navDisplay(model, request);
         return "homepage";
     }
 
     @GetMapping("/content")
-    public String viewAllPosts(Model model) {
+    public String viewAllPosts(HttpServletRequest request, Model model) {
         model.addAttribute("posts",
                 postRepository.findAllOrderByCreated_dateDesc());
+        navDisplay(model, request);
         return "content";
     }
 
+    @GetMapping("/displayContent")
+    public String displayPost(Model model, int post_id) {
+        model.addAttribute("post", postRepository.findById(post_id).get());
+        return "displayContent";
+    }
+
     @GetMapping("/writePost")
-    public String writePost() {
+    public String writePost(HttpServletRequest request, Model model) {
+        Optional<String> userCookie = fetchCookie(request);
+        if (userCookie.isEmpty()) {
+            return "redirect:/login";
+        }
+        navDisplay(model, request);
         return "writePost";
     }
 
@@ -157,7 +167,12 @@ public class MainController {
     }
 
     @GetMapping("/admin")
-    public String adminPage(Model model){
+    public String adminPage(Model model, HttpServletRequest request){
+        Optional<String> userCookie = fetchCookie(request);
+        if (userCookie.isEmpty()) {
+            return "redirect:/login";
+        }
+        navDisplay(model, request);
         // Admin page should display all posts, regardless of status
         // Admin should be able to view and edit all posts, in addition to changing status
         model.addAttribute("posts",postRepository.findAll());
@@ -165,19 +180,34 @@ public class MainController {
     }
 
     @GetMapping("deletePost")
-    public String deletePost(int post_id){
+    public String deletePost(int post_id, Model model, HttpServletRequest request){
+        Optional<String> userCookie = fetchCookie(request);
+        if (userCookie.isEmpty()) {
+            return "redirect:/login";
+        }
+        navDisplay(model, request);
         postRepository.deleteById(post_id);
         return "redirect:/admin";
     }
 
     @GetMapping("adminReview")
-    public String adminReviewPage(Model model){
+    public String adminReviewPage(Model model, HttpServletRequest request){
+        Optional<String> userCookie = fetchCookie(request);
+        if (userCookie.isEmpty()) {
+            return "redirect:/login";
+        }
+        navDisplay(model, request);
         model.addAttribute("pendings",postRepository.findAllByPending());
         return "adminReview";
     }
 
     @GetMapping("approvePost") // GetMapping correct here
-    public String approvePost(int post_id){
+    public String approvePost(int post_id, Model model, HttpServletRequest request){
+        Optional<String> userCookie = fetchCookie(request);
+        if (userCookie.isEmpty()) {
+            return "redirect:/login";
+        }
+        navDisplay(model, request);
         Post post = postRepository.findById(post_id).get();
 
         post.setPost_status(post_statusRepository.findById(2).orElse(null));
@@ -194,6 +224,7 @@ public class MainController {
         if (!userCookie.isPresent()) {
             return "redirect:/login";
         }
+        navDisplay(model, request);
         int user_id = Integer.parseInt(userCookie.get());
         User user = userRepository.findById(user_id).get();
         List<Post> userPosts = postRepository.findByUser(user);
@@ -208,6 +239,7 @@ public class MainController {
         if (!userCookie.isPresent()) {
             return "redirect:/login";
         }
+        navDisplay(model, request);
         int user_id = Integer.parseInt(userCookie.get());
         if (post.getUser().getUser_id() != user_id) {
             return "unauthorizedWarning";
@@ -218,11 +250,12 @@ public class MainController {
 
     // this is janky, suggestions on better ways welcome
     @PostMapping("/editPost")
-    public String performEditPost(Post post, BindingResult result, HttpServletRequest request) {
+    public String performEditPost(Post post, Model model, HttpServletRequest request) {
         Optional<String> userCookie = fetchCookie(request);
         if (!userCookie.isPresent()) {
             return "redirect:/login";
         }
+        navDisplay(model, request);
         int user_id = Integer.parseInt(userCookie.get());
         int status_id = Integer.parseInt(request.getParameter("status_id"));
         User user = userRepository.findById(user_id).get();
@@ -262,9 +295,15 @@ public class MainController {
         return "redirect:/";
     }
 
-    @GetMapping("/displayContent")
-    public String displayPost(Model model, int post_id){
-        model.addAttribute("post",postRepository.findById(post_id).get());
-        return "displayContent";
+    @PostMapping("/logout")
+    public String performLogout(HttpServletResponse response, HttpServletRequest request) {
+        Optional<String> userCookie = fetchCookie(request);
+        if (userCookie.isPresent()) {
+            Cookie deleteServletCookie = new Cookie("user_id", null);
+            deleteServletCookie.setMaxAge(0);
+            response.addCookie(deleteServletCookie);
+        }
+        return "redirect:/";
     }
+
 }
