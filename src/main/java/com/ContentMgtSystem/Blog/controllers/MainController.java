@@ -94,12 +94,6 @@ public class MainController {
         return "content";
     }
 
-    @GetMapping("/displayContent")
-    public String displayPost(Model model, int post_id) {
-        model.addAttribute("post", postRepository.findById(post_id).get());
-        return "displayContent";
-    }
-
     @GetMapping("/writePost")
     public String writePost(HttpServletRequest request, Model model) {
         Optional<String> userCookie = fetchCookie(request);
