@@ -90,10 +90,10 @@ public class PostRepositoryTest {
         Timestamp newTimeStamp2 = Timestamp.valueOf(testTimestampExpiration);
 
         Tag tag1 = new Tag();
-        tag1.setTag("TestTag1");
+        tag1.setTag_name("TestTag1");
         tagRepository.save(tag1);
         Tag tag2 = new Tag();
-        tag2.setTag("TestTag2");
+        tag2.setTag_name("TestTag2");
         tagRepository.save(tag2);
 
         List <Tag> allTags = tagRepository.findAll();
@@ -125,10 +125,10 @@ public class PostRepositoryTest {
         Timestamp newTimeStamp22 = Timestamp.valueOf(testTimestampExpiration2);
 
         Tag tag12 = new Tag();
-        tag12.setTag("TestTag12");
+        tag12.setTag_name("TestTag12");
         tagRepository.save(tag12);
         Tag tag22 = new Tag();
-        tag22.setTag("TestTag22");
+        tag22.setTag_name("TestTag22");
         tagRepository.save(tag22);
 
         List <Tag> allTags2 = tagRepository.findAll();
@@ -173,10 +173,10 @@ public class PostRepositoryTest {
         Timestamp newTimeStamp2 = Timestamp.valueOf(testTimestampExpiration);
 
         Tag tag1 = new Tag();
-        tag1.setTag("TestTag1");
+        tag1.setTag_name("TestTag1");
         tagRepository.save(tag1);
         Tag tag2 = new Tag();
-        tag2.setTag("TestTag2");
+        tag2.setTag_name("TestTag2");
         tagRepository.save(tag2);
 
         List<Tag> allTags = tagRepository.findAll();
@@ -208,10 +208,10 @@ public class PostRepositoryTest {
         Timestamp newTimeStamp22 = Timestamp.valueOf(testTimestampExpiration2);
 
         Tag tag12 = new Tag();
-        tag12.setTag("TestTag12");
+        tag12.setTag_name("TestTag12");
         tagRepository.save(tag12);
         Tag tag22 = new Tag();
-        tag22.setTag("TestTag22");
+        tag22.setTag_name("TestTag22");
         tagRepository.save(tag22);
 
         List <Tag> allTags2 = tagRepository.findAll();
@@ -240,7 +240,7 @@ public class PostRepositoryTest {
         }
 
         Assertions.assertEquals(2, listOfPost.size());
-        List<Post> listOfPostDescending = postRepository.findAllOrderByCreated_dateDesc();
+        List<Post> listOfPostDescending = postRepository.findAllNotExpired();
         Assertions.assertEquals(2, listOfPostDescending.size());
     }
 
@@ -260,10 +260,10 @@ public class PostRepositoryTest {
         Timestamp newTimeStamp2 = Timestamp.valueOf(testTimestampExpiration);
 
         Tag tag1 = new Tag();
-        tag1.setTag("TestTag1");
+        tag1.setTag_name("TestTag1");
         tagRepository.save(tag1);
         Tag tag2 = new Tag();
-        tag2.setTag("TestTag2");
+        tag2.setTag_name("TestTag2");
         tagRepository.save(tag2);
 
         List <Tag> allTags = tagRepository.findAll();
@@ -295,10 +295,10 @@ public class PostRepositoryTest {
         Timestamp newTimeStamp22 = Timestamp.valueOf(testTimestampExpiration2);
 
         Tag tag12 = new Tag();
-        tag12.setTag("TestTag12");
+        tag12.setTag_name("TestTag12");
         tagRepository.save(tag12);
         Tag tag22 = new Tag();
-        tag22.setTag("TestTag22");
+        tag22.setTag_name("TestTag22");
         tagRepository.save(tag22);
 
         List <Tag> allTags2 = tagRepository.findAll();

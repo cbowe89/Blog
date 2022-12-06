@@ -14,27 +14,20 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
     // Get the most recent post based on Timestamp that has approved status
     // *** ONLY TO BE USED FOR HOME PAGE TO DISPLAY MOST RECENT POST ***
-    @Query(value = "SELECT * FROM post WHERE status_id = 2 ORDER BY created_date DESC LIMIT 1",
+    @Query(value = "SELECT * FROM post WHERE status_id = 2 " +
+            "AND (expiration_date > NOW() OR expiration_date IS NULL)" +
+            "ORDER BY created_date DESC LIMIT 1",
             nativeQuery = true)
     List<Post> findAllPostsDescWithLimit();
 
-    /* Confirmed this method give same results as simplified Query above (findAllPostsDescLimit1)
-    @Query(value = "SELECT p.* from post AS p JOIN post_status AS ps" +
-            " ON p.status_id = ps.status_id" +
-            " WHERE ps.status_name = 'approved' ORDER BY created_date DESC LIMIT 1", nativeQuery = true)
-    List<Post> findAllByTimestamp();
-     */
-
     // Get all posts in descending order based on Timestamp
-    // *** USED BY CONTENT PAGE TO DISPLAY ALL POSTS, NEWEST TO OLDEST ***
-    @Query(value = "SELECT * FROM post WHERE status_id = 2 ORDER BY created_date DESC",
+    // *** USED BY CONTENT PAGE TO DISPLAY ALL POSTS ***
+    @Query(value = "SELECT * FROM post WHERE status_id = 2 " +
+            "AND (expiration_date > NOW() OR expiration_date IS NULL)",
             nativeQuery = true)
-    List<Post> findAllOrderByCreated_dateDesc();
+    List<Post> findAllNotExpired();
 
     // display the pending posts
-    // *** Could simplify this Query to "SELECT * FROM post WHERE status_id = 1 ORDER bY created_date DESC";
-    @Query(value = "SELECT p.* from post AS p JOIN post_status AS ps" +
-            " ON p.status_id = ps.status_id" +
-            " WHERE ps.status_name = 'pending';", nativeQuery = true)
+    @Query(value = "SELECT * FROM post WHERE status_id = 1", nativeQuery = true)
     List<Post> findAllByPending();
 }

@@ -61,7 +61,9 @@
                         <tr class="bg-info">
                             <th style="width: auto"><strong>Created Date</strong></th>
                             <th style="width: auto"><strong>Title</strong></th>
-                            <th style="width: auto"><strong>Post Body</strong></th>
+                            <th style="width: auto"><strong>Post Content</strong></th>
+                            <th style="width: auto"><strong>Tags</strong></th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -69,15 +71,19 @@
                             <th th:text="${post.created_date}">Created_Date</th>
                             <td th:text="${post.title}">Title</td>
                             <td th:text="${post.content}">Content</td>
+                            <td>
+                                <span th:each="tag,iterState : ${post.tags}"
+                                      th:text="${tag.tag_name} + ${!iterState.last ? ', ' : ''}"></span>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- For sort table -->
+        <!-- For sort table, default sort by newest first -->
         <script>
-            $('#sortTable').DataTable();
+            $('#sortTable').DataTable({order: [0,'desc']});
         </script>
 
 

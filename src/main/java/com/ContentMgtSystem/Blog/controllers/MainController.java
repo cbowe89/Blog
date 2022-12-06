@@ -84,7 +84,8 @@ public class MainController {
     @GetMapping("/content")
     public String viewAllPosts(HttpServletRequest request, Model model) {
         model.addAttribute("posts",
-                postRepository.findAllOrderByCreated_dateDesc());
+                postRepository.findAllNotExpired());
+        model.addAttribute("tags", tagRepository.findAll());
         navDisplay(model, request);
         return "content";
     }
@@ -128,7 +129,7 @@ public class MainController {
             for (String tagString : tagArray) {
                 if (tagRepository.findStringByContent(tagString) == null) {
                     Tag newTag = new Tag();
-                    newTag.setTag(tagString);
+                    newTag.setTag_name(tagString);
                     thisPostTags.add(newTag);
                     tagRepository.save(newTag);
                 }
