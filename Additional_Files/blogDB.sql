@@ -39,6 +39,19 @@ CREATE TABLE post(
     FOREIGN KEY (status_id) REFERENCES post_status(status_id)
 );
 
+CREATE TABLE image(
+    image_id INT PRIMARY KEY AUTO_INCREMENT,
+    image_path VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE post_image(
+    post_image_id INT PRIMARY KEY AUTO_INCREMENT,
+    post_id INT NOT NULL,
+    image_id INT NOT NULL,
+    FOREIGN KEY (post_id) REFERENCES post(post_id),
+    FOREIGN KEY (image_id) REFERENCES image(image_id)
+);
+
 CREATE TABLE tag(
     tag_id INT PRIMARY KEY AUTO_INCREMENT,
     tag_name VARCHAR(100) NOT NULL
