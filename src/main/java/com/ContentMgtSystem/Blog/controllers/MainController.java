@@ -45,6 +45,9 @@ public class MainController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    ImageRepository imageRepository;
+
     // Helper function to get user cookie
     private Optional<String> fetchCookie(HttpServletRequest request) {
         if (request.getCookies() == null || request.getCookies().length == 0) {

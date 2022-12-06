@@ -1,9 +1,7 @@
-homepage - need to get latest post to display
-
 content - need to show formatted text (not tags)
 
 save and show images
 
-add sort table for admin and user
+add sort table for user
 
 UML diagram
