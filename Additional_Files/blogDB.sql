@@ -41,7 +41,7 @@ CREATE TABLE post(
 
 CREATE TABLE tag(
     tag_id INT PRIMARY KEY AUTO_INCREMENT,
-    tag VARCHAR(100) NOT NULL
+    tag_name VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE post_tag(

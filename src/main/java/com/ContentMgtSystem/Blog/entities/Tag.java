@@ -12,7 +12,7 @@ public class Tag {
     private int tag_id;
 
     @Column(nullable = false)
-    private String tag;
+    private String tag_name;
 
     @ManyToMany(mappedBy = "tags")
     private List<Post> posts;
@@ -25,12 +25,12 @@ public class Tag {
         this.tag_id = tag_id;
     }
 
-    public String getTag() {
-        return tag;
+    public String getTag_name() {
+        return tag_name;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setTag_name(String tag_name) {
+        this.tag_name = tag_name;
     }
 
     public List<Post> getPosts() {
@@ -47,12 +47,12 @@ public class Tag {
         if (o == null || getClass() != o.getClass()) return false;
         Tag tag1 = (Tag) o;
         return tag_id == tag1.tag_id
-                && Objects.equals(tag, tag1.tag)
+                && Objects.equals(tag_name, tag1.tag_name)
                 && Objects.equals(posts, tag1.posts);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(tag_id, tag, posts);
+        return Objects.hash(tag_id, tag_name, posts);
     }
 }
