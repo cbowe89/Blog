@@ -77,6 +77,7 @@ public class MainController {
 
     @GetMapping("/")
     public String index(HttpServletRequest request, Model model) {
+        model.addAttribute("recentPosts", postRepository.findAllPostsDescWithLimit());
         navDisplay(model, request);
         return "homepage";
     }
