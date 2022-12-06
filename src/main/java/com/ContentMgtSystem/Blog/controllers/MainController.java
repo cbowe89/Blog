@@ -87,6 +87,7 @@ public class MainController {
     public String viewAllPosts(Model model) {
         model.addAttribute("posts",
                 postRepository.findAllOrderByCreated_dateDesc());
+
         return "content";
     }
 
