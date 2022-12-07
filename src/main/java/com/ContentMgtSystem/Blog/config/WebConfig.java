@@ -5,7 +5,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class ImageConfig implements WebMvcConfigurer {
+public class WebConfig implements WebMvcConfigurer {
     public final static String IMAGE_RESOURCE_BASE = "/postImages/";
     public final static String IMAGE_FILE_BASE = "/Images/postImages";
     public final static String BASE_URL = "http://localhost:8080";

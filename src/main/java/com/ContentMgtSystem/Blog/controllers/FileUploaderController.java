@@ -1,6 +1,6 @@
 package com.ContentMgtSystem.Blog.controllers;
 
-import com.ContentMgtSystem.Blog.util.ImageUtil;
+import com.ContentMgtSystem.Blog.util.FileUtil;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,9 +30,9 @@ public class FileUploaderController {
         String url = null;
         String fileName = file.getOriginalFilename();
         try (InputStream inputStream = file.getInputStream()) {
-            Path path = ImageUtil.getImagePath(fileName);
+            Path path = FileUtil.getImagePath(fileName);
             Files.copy(inputStream, path);
-            url = ImageUtil.getImageUrl(fileName);
+            url = FileUtil.getImageUrl(fileName);
         } catch (IOException ex) {
             ex.printStackTrace();
             throw new Exception("Failed to upload image.");

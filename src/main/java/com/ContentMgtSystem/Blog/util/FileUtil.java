@@ -1,6 +1,6 @@
 package com.ContentMgtSystem.Blog.util;
 
-import com.ContentMgtSystem.Blog.config.ImageConfig;
+import com.ContentMgtSystem.Blog.config.WebConfig;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,8 +9,8 @@ import java.nio.file.Paths;
 import java.time.Year;
 import java.time.YearMonth;
 
-public class ImageUtil {
-    public static void createDirectoryIfNotExist (String directory) {
+public class FileUtil {
+    public static void createDirectoryIfNotExist(String directory) {
         final Path path = Paths.get(directory);
         if (Files.notExists(path)) {
             try {
@@ -24,7 +24,7 @@ public class ImageUtil {
     public static Path getImagePath(String fileName) {
         // Create year directory if it doesn't exist
         StringBuilder sb = new StringBuilder();
-        sb.append(ImageConfig.IMAGE_FILE_BASE);
+        sb.append(WebConfig.IMAGE_FILE_BASE);
         sb.append(Year.now().getValue());
         createDirectoryIfNotExist(sb.toString());
 
@@ -40,13 +40,13 @@ public class ImageUtil {
     }
 
     public static String getImageUrl(String fileName) {
-        String baseUrl = ImageConfig.BASE_URL;
+        String baseUrl = WebConfig.BASE_URL;
         StringBuilder sb = new StringBuilder();
         sb.append(baseUrl);
         if (baseUrl.endsWith("/")) {
             baseUrl = baseUrl.substring(0, baseUrl.length()-1);
         }
-        sb.append(ImageConfig.IMAGE_RESOURCE_BASE);
+        sb.append(WebConfig.IMAGE_RESOURCE_BASE);
         sb.append(getYearAndMonthUrlFragment());
         sb.append(fileName);
         return sb.toString();
