@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS blog;
-CREATE DATABASE blog;
+DROP DATABASE IF EXISTS blog_test;
+CREATE DATABASE blog_test;
 
-USE blog;
+USE blog_test;
 
 CREATE TABLE user(
     user_id INT PRIMARY KEY AUTO_INCREMENT,
