@@ -85,6 +85,12 @@ public class MainController {
         return "homepage";
     }
 
+    @GetMapping("/disclaimer")
+    public String disclaimer(HttpServletRequest request, Model model) {
+        navDisplay(model, request);
+        return "disclaimer";
+    }
+
     @GetMapping("/content")
     public String viewAllPosts(HttpServletRequest request, Model model) {
         model.addAttribute("posts",
