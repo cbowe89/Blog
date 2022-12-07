@@ -9,32 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
-    <!--    <style>-->
-    <!--        ul {-->
-    <!--            list-style-type: none;-->
-    <!--            margin: 0;-->
-    <!--            padding: 0;-->
-    <!--            overflow: hidden;-->
-    <!--            background-color: #333;-->
-    <!--        }-->
-    <!--        li {-->
-    <!--            float: left;-->
-    <!--        }-->
-    <!--        li a {-->
-    <!--            display: block;-->
-    <!--            color: white;-->
-    <!--            text-align: center;-->
-    <!--            padding: 14px 16px;-->
-    <!--            text-decoration: none;-->
-    <!--        }-->
-    <!--        /* Change the link color to #111 (black) on hover */-->
-    <!--        li a:hover {-->
-    <!--            background-color: #111111;-->
-    <!--        }-->
-    <!--        .active {-->
-    <!--            background-color: #04AA6D;-->
-    <!--        }-->
-    <!--    </style>-->
+
 
     <title>Blog</title>
 
@@ -71,7 +46,7 @@
     <h1>Display Content</h1>
 </div>
 <div class="w-100 py-3">
-    <table class="table">
+    <table class="table table-striped">
         <thead>
         <tr class="bg-info">
             <th>Created: </th>
@@ -88,34 +63,7 @@
         </tbody>
     </table>
 </div>
-
-<!-- Previous styling-->
-<!--    <div class="row m-4">-->
-<!--        <h1>Admin Review</h1>-->
-<!--    </div>-->
-<!--    <ul>-->
-<!--        <li><a href="/">Home</a></li>-->
-<!--        <li><a href="/content">Content</a></li>-->
-<!--    </ul>-->
-
-<!--    <div class="row m-4 border border-dark">-->
-<!--        <table class="table table-striped">-->
-<!--            <thead>-->
-<!--            <tr>-->
-<!--                <th>ID</th>-->
-<!--                <th>Content</th>-->
-<!--                <th>Approve</th>-->
-<!--            </tr>-->
-<!--            </thead>-->
-<!--            <tbody>-->
-<!--            <tr th:each="pending : ${pendings}">-->
-<!--                <td th:text="${pending.post_id}">Post ID</td>-->
-<!--                <td th:utext="${pending.content}" >Post Content</td>-->
-<!--                <td><a href="#" th:href="@{/approvePost(post_id=${pending.post_id})}">Approve</a></td>-->
-
-<!--            </tr>-->
-<!--            </tbody>-->
-<!--        </table>-->
+<div th:replace="fragments/footer :: foot"></div>
 
 
 
