@@ -1,5 +1,3 @@
-content - need to show formatted text (not tags)
-
 save and show images
 
 add sort table for user
