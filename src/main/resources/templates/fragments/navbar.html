@@ -10,25 +10,31 @@
                     <li class="nav-item px-2">
                         <a class="nav-link active text-light" aria-current="page" href="/">Home</a>
                     </li>
-
-                    <!-- admin panel-->
-                    <li class="nav-item px-2" th:if="${role == 'anAdmin'}">
-                        <a class="nav-link active text-light" href="admin">Admin Panel</a>
-                    </li>
-                    <li class="nav-item px-2" th:if="${role == 'anAdmin'}">
-                        <a class="nav-link active text-light" href="adminReview">Admin Review</a>
-                    </li>
-
-
                     <li class="nav-item px-2">
-                        <a class="nav-link text-light" href="/content">All Content</a>
+                        <a class="nav-link text-light" href="/content">View All Posts</a>
                     </li>
-                    <div class="collapse navbar-collapse d-flex justify-content-between" th:if="${logInStatus == 'in'}">
+<!--                </ul>-->
+
+<!--                <ul class="navbar-nav">-->
+                    <div class="collapse navbar-collapse d-flex justify-content-between mx-4"
+                         th:if="${role == 'anAdmin'}">
+                    <!-- admin panel-->
                         <li class="nav-item px-2">
-                            <a class="nav-link text-light" href="/user">Manage Your Content</a>
+                            <a class="nav-link active text-light" href="admin">Admin Panel</a>
                         </li>
                         <li class="nav-item px-2">
-                            <a class="nav-link text-light" href="/writePost">Write Post</a>
+                            <a class="nav-link active text-light" href="adminReview">Review & Approve User Posts</a>
+                        </li>
+                    </div>
+<!--                </ul>-->
+<!--                <ul class="navbar-nav">-->
+                    <div class="collapse navbar-collapse d-flex justify-content-between"
+                         th:if="${logInStatus == 'in'}">
+                        <li class="nav-item px-2">
+                            <a class="nav-link text-light" href="/user">Manage Your Posts</a>
+                        </li>
+                        <li class="nav-item px-2">
+                            <a class="nav-link text-light" href="/writePost">Write a Post</a>
                         </li>
                     </div>
                 </ul>
@@ -40,9 +46,11 @@
 <!--                        <a class="nav-link text-light" href="/login">Logout</a>-->
                     </li>
                     <li class="nav-item px-2" th:if="${logInStatus == 'out'}">
-                        <a class="text-light" href="/login"> <button type="submit" class="btn btn-primary" href="/login">
+                        <a class="text-light" href="/login">
+                            <button type="submit" class="btn btn-primary" href="/login">
                             Login
-                        </button></a>
+                        </button>
+                        </a>
                     </li>
                 </ul>
             </div>

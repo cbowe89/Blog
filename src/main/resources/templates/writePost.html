@@ -24,7 +24,7 @@
             toolbar1:
                 "insertfile undo redo | styleselect | h1 h2 bold italic strikethrough blockquote | " +
                 "alignleft aligncenter alignright alignjustify" +
-                "| bullist numlist outdent indent | link image",
+                "| bullist numlist outdent indent | link image | code",
             toolbar2: "preview media | forecolor backcolor emoticons",
             menubar: false,
             relative_urls: false,
@@ -41,6 +41,7 @@
                 input.onchange = function () {
                     var file = this.files[0];
                     var reader = new FileReader();
+                    reader.readAsDataURL(file);
                     reader.onload = function () {
                         /*
                         Note: Now we need to register the blob in TinyMCEs image blob
@@ -58,7 +59,24 @@
                     reader.readAsDataURL(file);
                 };
                 input.click();
-            }
+            },
+            setup: function (editor) {
+                editor.on('init', function(args) {
+                    editor = args.target;
+
+                    editor.on('NodeChange', function(e) {
+                    if (e && e.element.nodeName.toLowerCase() == 'img') {
+                        width = e.element.width;
+                        height = e.element.height;
+                        if (width > 500) {
+                            height = height / (width / 500);
+                            width = 500;
+                        }
+                    tinyMCE.DOM.setAttribs(e.element, {'width': width, 'height': height});
+                    }
+                    });
+                });
+            },
         });
     </script>
     <title>Blog</title>

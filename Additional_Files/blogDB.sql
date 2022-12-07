@@ -31,7 +31,7 @@ CREATE TABLE post(
     post_id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
     title VARCHAR(250) NOT NULL,
-    content TEXT NOT NULL,
+    content LONGTEXT NOT NULL,
     created_date TIMESTAMP NOT NULL,
     expiration_date TIMESTAMP,
     status_id INT NOT NULL,

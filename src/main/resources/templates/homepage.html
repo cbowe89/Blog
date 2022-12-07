@@ -30,14 +30,18 @@
         <table class="table table-striped">
             <thead>
             <tr class="bg-info">
-                <th>Newest Update</th>
-                <th>Post Information</th>
+                <th class="text-center">Newest Posts</th>
+
             </tr>
             </thead>
             <tbody>
             <tr th:each="post : ${recentPosts}">
-                <td th:text="${post.title} + ' ' + ${post.created_date}">Title - Created_Date</td>
-                <td th:utext="${post.content}">Content</td>
+<!--                <td th:text="${post.title} + ' ' + ${post.created_date}">Title - Created_Date</td>-->
+                <td><div class="d-flex flex-column align-items-center">
+                    <h2 th:text="${post.title}">Title</h2>
+                    <p th:text="${post.created_date}">Created Date</p>
+                    <span class="d-flex flex-column align-items-center" th:utext="${post.content}">Content></span>
+                </div></td>
             </tr>
             </tbody>
         </table>
