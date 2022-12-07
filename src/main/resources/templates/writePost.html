@@ -18,7 +18,7 @@
                 selector: 'textarea',
                 skin: 'bootstrap',
                 plugins: [
-                    'a11ychecker','advlist','advcode','advtable','autolink','checklist','export',
+                    'a11ychecker','advlist','advcode','advtable','autolink','checklist','code','export',
                     'lists','link','image','charmap','preview','anchor','searchreplace','visualblocks',
                     'powerpaste','fullscreen','formatpainter','insertdatetime','table','help','wordcount'
                 ],
@@ -40,52 +40,113 @@
                             (editor.getContainer().style.borderColor = "");
                     });
                 },
+                images_upload_handler: function (blobInfo, success, failure) {
+                    var xhr, formData;
+
+                    xhr = new XMLHttpRequest();
+                    xhr.withCredentials = false;
+                    xhr.open('POST', 'http://localhost:8080/Images/postImages');
+
+                    xhr.onload = function () {
+                        var json;
+
+                        if (xhr.status != 200) {
+                            failure('HTTP Error: ' + xhr.status);
+                            return;
+                        }
+
+                        json = xhr.responseText;
+                        success(json);
+                    };
+
+                    formData = new FormData();
+                    formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+                    xhr.send(formData);
+                },
+
+                // enable title field in the Image dialog
+                image_title: true,
+
+                // enable automatic uploads of images represented by blob or data URIs
+                automatic_uploads: true,
+
+                // Add custom filePicker only to Image dialog
+                file_picker_types: 'image',
+
+                // Custom image picker
+                file_picker_callback: function (cb, value, meta) {
+                    var input = document.createElement('input');
+                    input.setAttribute('type', 'file');
+                    input.setAttribute('accept', 'image/*');
+
+                    input.onchange = function () {
+                        var file = this.files[0];
+                        var reader = new FileReader();
+                        reader.onload = function () {
+                            /*
+                            Note: Now we need to register the blob in TinyMCEs image blob
+                            registry. In the next release this part hopefully won't be
+                            necessary, as we are looking to handle it internally.
+                            */
+                            var id = 'blobid' + (new Date()).getTime();
+                            var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                            var base64 = reader.result.split(',')[1];
+                            var blobInfo = blobCache.create(id, file, base64);
+                            blobCache.add(blobInfo);
+                            /* call the callback and populate the Title field with the file name */
+                            cb(blobInfo.blobUri(), { title: file.name });
+                        };
+                        reader.readAsDataURL(file);
+                    };
+                    input.click();
+                }
             });
         </script>
         <title>Blog</title>
     </head>
 
     <body>
-    <div th:replace="fragments/navbar :: nav"></div>
-    <div class="container-fluid w-75 d-flex flex-column align-items-center">
-        <div class="row m-4">
-            <h1>Add a New Post</h1>
-        </div>
+        <div th:replace="fragments/navbar :: nav"></div>
+        <div class="container-fluid w-75 d-flex flex-column align-items-center">
+            <div class="row m-4">
+                <h1>Add a New Post</h1>
+            </div>
 
-        <div class="container-fluid w-90">
-            <div class="row m-4 border border-dark d-flex flex-column align-items-center">
-                <div class="col-7 text-center m-3">
-                    <form action="addNewPost" method="POST">
-                            <div class="col-12 m-1 text-center">
-                                <div class="form-group">
-                                    <label for="title" class="text-center">
-                                        <h3>Create your new post</h3>
-                                    </label>
+            <div class="container-fluid w-90">
+                <div class="row m-4 border border-dark d-flex flex-column align-items-center">
+                    <div class="col-7 text-center m-3">
+                        <form action="addNewPost" method="POST">
+                                <div class="col-12 m-1 text-center">
+                                    <div class="form-group">
+                                        <label for="title" class="text-center">
+                                            <h3>Create your new post</h3>
+                                        </label>
+                                    </div>
+                                    <div class="my-2">
+                                        <input type="text" name="title" id="title" class="form-control"/>
+                                    </div>
+                                    <div class="my-2">
+                                        <textarea id="textarea" name="content"></textarea>
+                                    </div>
                                 </div>
-                                <div class="my-2">
-                                    <input type="text" name="title" id="title" class="form-control"/>
-                                </div>
-                                <div class="my-2">
-                                    <textarea id="textarea" name="content"></textarea>
-                                </div>
+                            <div class="d-flex flex-column align-items-center">
+                                <label for="tagsFromHtml" class="col-1 col-form-label">Hashtags</label>
+                                <input type="text" name="tagsFromHtml" id="tagsFromHtml"
+                                       placeholder="Enter tags (comma separated)"
+                                       class="col-12 form-control"/>
                             </div>
-                        <div class="d-flex flex-column align-items-center">
-                            <label for="tagsFromHtml" class="col-1 col-form-label">Hashtags</label>
-                            <input type="text" name="tagsFromHtml" id="tagsFromHtml"
-                                   placeholder="Enter tags (comma separated)"
-                                   class="col-12 form-control"/>
-                        </div>
-                        <div class="d-flex flex-column align-items-center">
-                            <label for="htmlExpDate" class="col-1 col-form-label">Expiration Date</label>
-                            <input type="datetime-local" class="col-3 form-control" name="htmlExpDate"
-                                   id="htmlExpDate"/>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Create Blog Post</button>
-                    </form>
+                            <div class="d-flex flex-column align-items-center">
+                                <label for="htmlExpDate" class="col-1 col-form-label">Expiration Date</label>
+                                <input type="datetime-local" class="col-3 form-control" name="htmlExpDate"
+                                       id="htmlExpDate"/>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Create Blog Post</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 <!--        <div class="container-fluid">-->
 <!--            <h1>Write A New Post</h1>-->
 <!--            <hr>-->
