@@ -277,7 +277,7 @@ public class MainController {
             role = "anAdmin";
         }
         if (post.getUser().getUser_id() != user_id && role.equals("aUser")) {
-            return "unauthorizedWarning";
+            return "error";
         }
         model.addAttribute("post", post);
         return "editPost";
