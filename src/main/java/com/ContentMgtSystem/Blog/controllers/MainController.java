@@ -5,10 +5,6 @@ import com.ContentMgtSystem.Blog.repositories.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.http.HttpHeaders;
@@ -44,9 +40,6 @@ public class MainController {
 
     @Autowired
     UserRepository userRepository;
-
-    @Autowired
-    ImageRepository imageRepository;
 
     // Helper function to get user cookie
     private Optional<String> fetchCookie(HttpServletRequest request) {
@@ -131,24 +124,10 @@ public class MainController {
         // Set created date as date post is submitted
         post.setCreated_date(Timestamp.valueOf(LocalDateTime.now()));
 
-        // Get image paths
-        String content = post.getContent();
-        Document document = Jsoup.parse(content);
-        Elements images = document.select("div.imageInlineCenter img[src]");
-        List<Image> thisPostImages = new ArrayList<>();
-        if (!images.isEmpty()) {
-            for (Element img : images) {
-                Image newImage = new Image();
-                newImage.setImage_path(img.attr("src"));
-                thisPostImages.add(newImage);;
-            }
-            post.setImages(thisPostImages);
-        }
-
         // Set tags
         String tagsFromHtml = request.getParameter("tagsFromHtml");
         List<Tag> thisPostTags = new ArrayList<>();
-        if (tagsFromHtml != null) {
+        if (tagsFromHtml != null && !tagsFromHtml.equals("")) {
             String[] tagArray = tagsFromHtml.split(",");
             for (String tagString : tagArray) {
                 if (tagRepository.findStringByContent(tagString) == null) {
@@ -175,16 +154,16 @@ public class MainController {
         // If admin, set status as approved, save post, return to admin page
         if (user.getRoles().contains(roleRepository.findById(1).get())) {
             post.setPost_status(post_statusRepository.findById(2).get());
-            imageRepository.saveAll(thisPostImages);
-            tagRepository.saveAll(thisPostTags);
+            if (!thisPostTags.isEmpty())
+                tagRepository.saveAll(thisPostTags);
             postRepository.save(post);
             return "redirect:/admin";
         }
         // If user, set status as pending, save post, return to user page
         else if (user.getRoles().contains(roleRepository.findById(2).get())) {
             post.setPost_status(post_statusRepository.findById(1).get());
-            imageRepository.saveAll(thisPostImages);
-            tagRepository.saveAll(thisPostTags);
+            if (!thisPostTags.isEmpty())
+                tagRepository.saveAll(thisPostTags);
             postRepository.save(post);
             return "redirect:/user";
         }
