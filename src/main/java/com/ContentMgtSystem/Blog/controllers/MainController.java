@@ -252,7 +252,14 @@ public class MainController {
         }
         navDisplay(model, request);
         int user_id = Integer.parseInt(userCookie.get());
-        if (post.getUser().getUser_id() != user_id) {
+        User user = userRepository.findById(user_id).get();
+        String role = "aUser";
+        if (user.getRoles()
+                .stream()
+                .filter(role1 -> role1.getRole_name().equals("admin")).count() == 1) {
+            role = "anAdmin";
+        }
+        if (post.getUser().getUser_id() != user_id && role.equals("aUser")) {
             return "unauthorizedWarning";
         }
         model.addAttribute("post", post);
