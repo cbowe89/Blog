@@ -43,7 +43,7 @@
 
                 xhr = new XMLHttpRequest();
                 xhr.withCredentials = false;
-                xhr.open('POST', 'http://localhost:8080/Images/postImages');
+                xhr.open('POST', 'http://localhost:8080/upload/image');
 
                 xhr.onload = function () {
                     var json;
@@ -69,7 +69,7 @@
             // Enable automatic uploads of images represented by blob or data URIs
             automatic_uploads: true,
 
-            // Custom filePicker only to Image dialog
+            // Custom file picker (only Image)
             file_picker_types: 'image',
 
             // Custom image picker
