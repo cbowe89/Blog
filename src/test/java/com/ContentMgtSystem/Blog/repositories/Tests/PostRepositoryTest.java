@@ -86,7 +86,7 @@ public class PostRepositoryTest {
         String content = "TestContent1";
         String testTimestampCreated = "2022-01-01 11:11:11";
         Timestamp newTimeStamp1 = Timestamp.valueOf(testTimestampCreated);
-        String testTimestampExpiration = "2022-08-09 10:10:10";
+        String testTimestampExpiration = "2022-12-30 11:59:59";
         Timestamp newTimeStamp2 = Timestamp.valueOf(testTimestampExpiration);
 
         Tag tag1 = new Tag();
@@ -121,7 +121,7 @@ public class PostRepositoryTest {
         String content2 = "TestContent2";
         String testTimestampCreated2 = "2022-05-05 11:11:11";
         Timestamp newTimeStamp12 = Timestamp.valueOf(testTimestampCreated2);
-        String testTimestampExpiration2 = "2022-08-09 10:10:10";
+        String testTimestampExpiration2 = "2022-12-30 11:59:59";
         Timestamp newTimeStamp22 = Timestamp.valueOf(testTimestampExpiration2);
 
         Tag tag12 = new Tag();
@@ -169,7 +169,7 @@ public class PostRepositoryTest {
         String content = "TestContent1";
         String testTimestampCreated = "2022-01-01 11:11:11";
         Timestamp newTimeStamp1 = Timestamp.valueOf(testTimestampCreated);
-        String testTimestampExpiration = "2022-08-09 10:10:10";
+        String testTimestampExpiration = "2022-12-30 11:59:59";
         Timestamp newTimeStamp2 = Timestamp.valueOf(testTimestampExpiration);
 
         Tag tag1 = new Tag();
@@ -204,7 +204,7 @@ public class PostRepositoryTest {
         String content2 = "TestContent2";
         String testTimestampCreated2 = "2022-05-05 11:11:11";
         Timestamp newTimeStamp12 = Timestamp.valueOf(testTimestampCreated2);
-        String testTimestampExpiration2 = "2022-08-09 10:10:10";
+        String testTimestampExpiration2 = "2022-12-30 11:59:59";
         Timestamp newTimeStamp22 = Timestamp.valueOf(testTimestampExpiration2);
 
         Tag tag12 = new Tag();
