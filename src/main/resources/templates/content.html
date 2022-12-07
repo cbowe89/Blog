@@ -25,31 +25,21 @@
         <table id="sortTable" class="table table-striped">
             <thead>
             <tr class="bg-info">
-                <th style="width: auto">
-                    <strong>Created Date</strong>
-                </th>
-                <th style="width: auto">
-                    <strong>Title</strong>
-                </th>
-                <th style="width: auto">
-                    <strong>Post Content</strong>
-                </th>
-                <th style="width: auto">
-                    <strong>Tags</strong>
-                </th>
+                <th class="text-center">All Posts Sorted By Created Date</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="post : ${posts}">
-                <th th:text="${post.created_date}">Created_Date</th>
-                <td th:text="${post.title}">Title</td>
-                <td th:utext="${post.content}">Content</td>
-                <td>
-                    <span
-                            th:each="tag,iterState : ${post.tags}"
-                            th:text="${tag.tag_name} + ${!iterState.last ? ', ' : ''}">
-
-                    </span>
+                <td >
+                    <p class="small" th:text="${post.created_date}">Created date</p>
+                    <h3 th:text="${post.title}">Title</h3>
+                    <hr>
+                    <p th:utext="${post.content}">Content</p>
+                    <p>Tags: <span
+                                th:each="tag,iterState : ${post.tags}"
+                                th:text="${tag.tag_name} + ${!iterState.last ? ', ' : ''}">
+                        </span>
+                    </p>
                 </td>
             </tr>
             </tbody>
