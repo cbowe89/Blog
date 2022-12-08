@@ -1,6 +1,8 @@
 package com.ContentMgtSystem.Blog.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Timestamp;
@@ -19,9 +21,11 @@ public class Post {
     private User user;
 
     @Column(nullable = false)
+    @NotBlank(message = "Title must not be empty.")
     private String title;
 
     @Column(nullable = false)
+    @NotBlank(message = "Content must not be empty.")
     private String content;
 
     @Column(nullable = false)
