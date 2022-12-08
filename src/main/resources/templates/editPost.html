@@ -47,11 +47,21 @@
                                       th:value="${post.content}" th:text="${post.content}"></textarea>
                         </div>
                     </div>
+                    <div class="d-flex flex-column align-items-center">
+                        <label for="tagsFromHtml" class="col-form-label">Hashtags</label>
+                        <input type="text" name="tagsFromHtml" id="tagsFromHtml"
+                               placeholder="Enter tags (comma separated)"
+                               class="col-12 form-control" />
+                    </div>
+                    <div class="d-flex flex-column align-items-center">
+                        <label for="htmlExpDate" class="col-form-label w-100">Expiration Date</label>
+                        <input type="datetime-local" class="col-3 form-control"
+                               name="htmlExpDate" id="htmlExpDate"/>
+                    </div>
                     <input type="hidden" name="post_id" th:value="${post.post_id}" />
                     <input type="hidden" name="created_date" th:value="${post.created_date}" />
-                    <!--                        <input type="hidden" name="expiration_date" th:value="${post.expiration_date}"/>-->
                     <input type="hidden" name="status_id" th:value="${post.post_status.status_id}" />
-                    <button type="submit" class="btn btn-primary">Edit Blog Post</button>
+                    <button type="submit" class="btn btn-primary my-2">Edit Blog Post</button>
                 </form>
             </div>
         </div>

@@ -94,7 +94,12 @@ public class MainController {
     }
 
     @GetMapping("/displayContent")
-    public String displayPost(Model model, int post_id) {
+    public String displayPost(Model model, int post_id, HttpServletRequest request) {
+        Optional<String> userCookie = fetchCookie(request);
+        if (userCookie.isEmpty()) {
+            return "redirect:/login";
+        }
+        navDisplay(model, request);
         model.addAttribute("post", postRepository.findById(post_id).get());
         return "displayContent";
     }
