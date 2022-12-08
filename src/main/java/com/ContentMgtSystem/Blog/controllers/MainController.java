@@ -268,6 +268,11 @@ public class MainController {
                 .stream()
                 .map(tag -> tag.getTag_name())
                 .collect(Collectors.joining(","));
+
+        String expTimestamp = post.getExpiration_date().toString();
+
+        
+        model.addAttribute("htmlExpDate", expTimestamp);
         model.addAttribute("tags", tags);
         model.addAttribute("post", post);
         return "editPost";

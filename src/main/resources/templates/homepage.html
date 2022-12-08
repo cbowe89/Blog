@@ -39,8 +39,21 @@
 <!--                <td th:text="${post.title} + ' ' + ${post.created_date}">Title - Created_Date</td>-->
                 <td><div class="d-flex flex-column align-items-center">
                     <h2 th:text="${post.title}">Title</h2>
-                    <p th:text="${post.created_date}">Created Date</p>
-                    <span class="d-flex flex-column align-items-center" th:utext="${post.content}">Content></span>
+                    <div class="d-flex flex-row align-items-center">
+                        <p class="mx-1">Created: </p>
+                        <p th:text="${post.created_date}">Created Date</p>
+                    </div>
+                    <div class="d-flex flex-row align-items-center">
+                        <p class="mx-1">Expires: </p>
+                        <p th:text="${post.expiration_date}"> Expiration Date</p>
+                    </div>
+                    <span class="d-flex flex-column align-items-center my-2" th:utext="${post.content}">Content</span>
+                    <p>Tags:
+                        <span
+                                th:each="tag,iterState : ${post.tags}"
+                                th:text="${tag.tag_name} + ${!iterState.last ? ', ' : ''}">
+                        </span>
+                    </p>
                 </div></td>
             </tr>
             </tbody>
