@@ -1,6 +1,7 @@
 package com.ContentMgtSystem.Blog.entities;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -27,6 +28,7 @@ public class Post {
     private Timestamp created_date;
 
     @Column
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Timestamp expiration_date;
 
     @ManyToOne

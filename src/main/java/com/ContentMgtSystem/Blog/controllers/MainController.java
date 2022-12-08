@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 public class MainController {
@@ -263,11 +264,15 @@ public class MainController {
         if (post.getUser().getUser_id() != user_id && role.equals("aUser")) {
             return "error";
         }
+        String tags = post.getTags()
+                .stream()
+                .map(tag -> tag.getTag_name())
+                .collect(Collectors.joining(","));
+        model.addAttribute("tags", tags);
         model.addAttribute("post", post);
         return "editPost";
     }
 
-    // this is janky, suggestions on better ways welcome
     @PostMapping("/editPost")
     public String performEditPost(Post post, Model model, HttpServletRequest request) {
         Optional<String> userCookie = fetchCookie(request);
@@ -281,6 +286,36 @@ public class MainController {
         Post_Status post_status = post_statusRepository.getById(status_id);
         post.setPost_status(post_status);
         post.setUser(user);
+
+        // Set tags
+        String tagsFromHtml = request.getParameter("tagsFromHtml");
+        List<Tag> thisPostTags = new ArrayList<>();
+        if (tagsFromHtml != null && !tagsFromHtml.equals("")) {
+            String[] tagArray = tagsFromHtml.split(",");
+            for (String tagString : tagArray) {
+                if (tagRepository.findStringByContent(tagString) == null) {
+                    Tag newTag = new Tag();
+                    newTag.setTag_name(tagString);
+                    thisPostTags.add(newTag);
+                }
+                else
+                    thisPostTags.add(tagRepository.findTagByContent(tagString));
+            }
+            if (!thisPostTags.isEmpty())
+                post.setTags(thisPostTags);
+        }
+
+        // If expiration date is set, change from String to Timestamp and set
+        String htmlExpDate = request.getParameter("htmlExpDate");
+        if (!htmlExpDate.equals("")) {
+            String dateTimeString = htmlExpDate.replace("T", " ");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            Timestamp timestamp = Timestamp.valueOf(LocalDateTime.parse(dateTimeString, formatter));
+            post.setExpiration_date(timestamp);
+        }
+
+        if (!thisPostTags.isEmpty())
+            tagRepository.saveAll(thisPostTags);
         postRepository.save(post);
         return "redirect:/user?user_id=" + user_id;
     }
