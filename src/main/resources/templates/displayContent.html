@@ -32,33 +32,26 @@
             <tbody>
             <tr>
                 <td >
-                    <div class="d-flex justify-content-around">
-
-                        <a href="#" th:href="@{/editPost(post_id=${post.post_id})}">Edit</a>
-
-                        <a href="#" th:href="@{/approvePost(post_id=${post.post_id})}">Approve</a>
-
-                        <a href="#" th:href="@{/deletePost(post_id=${post.post_id})}">Delete</a>
-
-                    </div>
-                    <hr>
                     <p th:utext="${post.content}">Content</p>
                     <p class="small" th:text="${post.created_date}">Created date</p>
-                    <p>Tags: <span
+                    <p class="small" th:text="${post.expiration_date}">Expiration date</p>
+                    <p>Tags:
+                        <span
                             th:each="tag,iterState : ${post.tags}"
                             th:text="${tag.tag_name} + ${!iterState.last ? ', ' : ''}">
                         </span>
                     </p>
+                    <hr>
+                    <div class="d-flex justify-content-around">
+
+                        <a href="#" th:href="@{/editPost(post_id=${post.post_id})}">
+                            <button class="btn btn-primary">Edit</button>
+
+                        </a>
+
+                    </div>
                 </td>
-<!--                <td>-->
-<!--                    <a href="#" th:href="@{/editPost(post_id=${post.post_id})}">Edit</a>-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                    <a href="#" th:href="@{/approvePost(post_id=${post.post_id})}">Approve</a>-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                    <a href="#" th:href="@{/deletePost(post_id=${post.post_id})}">Delete</a>-->
-<!--                </td>-->
+
             </tr>
 
             </tbody>

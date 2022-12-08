@@ -15,8 +15,6 @@
       tinymce.init({
         selector: '#mytextarea',
         //plugins: 'autoresize',
-        width: 700,
-        height: 400,
         resize: false,
         menubar: false
       });
@@ -42,8 +40,8 @@
                         <div class="my-2">
                             <input type="text" name="Title" id="title" class="form-control" th:value="${post.title}" />
                         </div>
-                        <div class="my-2 row">
-                            <textarea id="mytextarea" name="content" class="w-75"
+                        <div class="my-2 w-100">
+                            <textarea id="mytextarea" name="content" class=""
                                       th:value="${post.content}" th:text="${post.content}"></textarea>
                         </div>
                     </div>
