@@ -98,9 +98,21 @@
                         </div>
                         <div class="my-2">
                             <input type="text" name="Title" id="title" class="form-control" th:value="${post.title}" />
+                            <div th:if="${#fields.hasErrors('post.content')}">
+                                <p th:each="error : ${#fields.errors('post.content')}"
+                                   class="alert alert-danger" th:text="${error}">
+                                    Post must have a body
+                                </p>
+                            </div>
                         </div>
                         <div class="my-2 w-100">
                             <textarea id="mytextarea" name="content" th:text="${post.content}"></textarea>
+                            <div th:if="${#fields.hasErrors('post.content')}">
+                                <p th:each="error : ${#fields.errors('post.content')}"
+                                   class="alert alert-danger" th:text="${error}">
+                                    Post must have title
+                                </p>
+                            </div>
                         </div>
                     </div>
 
