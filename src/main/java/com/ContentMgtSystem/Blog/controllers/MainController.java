@@ -264,16 +264,20 @@ public class MainController {
         if (post.getUser().getUser_id() != user_id && role.equals("aUser")) {
             return "error";
         }
-        String tags = post.getTags()
-                .stream()
-                .map(tag -> tag.getTag_name())
-                .collect(Collectors.joining(","));
 
-        String expTimestamp = post.getExpiration_date().toString();
+        if (post.getTags() != null) {
+            String tags = post.getTags()
+                    .stream()
+                    .map(tag -> tag.getTag_name())
+                    .collect(Collectors.joining(","));
+            model.addAttribute("tags", tags);
+        }
 
-        
-        model.addAttribute("htmlExpDate", expTimestamp);
-        model.addAttribute("tags", tags);
+        if (post.getExpiration_date() != null) {
+            String expTimestamp = post.getExpiration_date().toString();
+            model.addAttribute("htmlExpDate", expTimestamp);
+        }
+
         model.addAttribute("post", post);
         return "editPost";
     }
