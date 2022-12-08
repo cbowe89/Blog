@@ -5,6 +5,10 @@ import com.ContentMgtSystem.Blog.repositories.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Valid;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.http.HttpHeaders;
@@ -14,15 +18,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -41,6 +43,8 @@ public class MainController {
 
     @Autowired
     UserRepository userRepository;
+
+    Set<ConstraintViolation<Post>> violations = new HashSet<>();
 
     // Helper function to get user cookie
     private Optional<String> fetchCookie(HttpServletRequest request) {
@@ -108,15 +112,22 @@ public class MainController {
     @GetMapping("/writePost")
     public String writePost(HttpServletRequest request, Model model) {
         Optional<String> userCookie = fetchCookie(request);
+        navDisplay(model, request);
         if (userCookie.isEmpty()) {
             return "redirect:/login";
         }
-        navDisplay(model, request);
+
+        model.addAttribute("post", new Post());
         return "writePost";
     }
 
     @PostMapping("/addNewPost")
-    public String addNewPost(Post post, HttpServletRequest request) {
+    public String addNewPost(@Valid Post post, BindingResult result, HttpServletRequest request, Model model) {
+
+        if(result.hasErrors()) {
+            navDisplay(model, request);
+            return "writePost";
+        }
         Optional<String> userCookie = fetchCookie(request);
         if (userCookie.isEmpty()) {
             return "redirect:/login";
@@ -126,7 +137,9 @@ public class MainController {
         int user_id = Integer.parseInt(userCookie.get());
         User user = userRepository.findById(user_id).get();
         post.setUser(user);
-
+        if(result.hasErrors()) {
+            return "writePost";
+        }
         // Set created date as date post is submitted
         post.setCreated_date(Timestamp.valueOf(LocalDateTime.now()));
 
@@ -157,26 +170,31 @@ public class MainController {
             post.setExpiration_date(timestamp);
         }
 
-        // If admin, set status as approved, save post, return to admin page
-        if (user.getRoles().contains(roleRepository.findById(1).get())) {
-            post.setPost_status(post_statusRepository.findById(2).get());
-            if (!thisPostTags.isEmpty())
-                tagRepository.saveAll(thisPostTags);
-            postRepository.save(post);
-            return "redirect:/admin";
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(post);
+        if (violations.isEmpty()) {
+            // If admin, set status as approved, save post, return to admin page
+            if (user.getRoles().contains(roleRepository.findById(1).get())) {
+                post.setPost_status(post_statusRepository.findById(2).get());
+                if (!thisPostTags.isEmpty())
+                    tagRepository.saveAll(thisPostTags);
+                postRepository.save(post);
+                return "redirect:/admin";
+            }
+            // If user, set status as pending, save post, return to user page
+            else if (user.getRoles().contains(roleRepository.findById(2).get())) {
+                post.setPost_status(post_statusRepository.findById(1).get());
+                if (!thisPostTags.isEmpty())
+                    tagRepository.saveAll(thisPostTags);
+                postRepository.save(post);
+                return "redirect:/user";
+            }
+            // If not valid user, do not save post, return to home page
+            else {
+                return "redirect:/";
+            }
         }
-        // If user, set status as pending, save post, return to user page
-        else if (user.getRoles().contains(roleRepository.findById(2).get())) {
-            post.setPost_status(post_statusRepository.findById(1).get());
-            if (!thisPostTags.isEmpty())
-                tagRepository.saveAll(thisPostTags);
-            postRepository.save(post);
-            return "redirect:/user";
-        }
-        // If not valid user, do not save post, return to home page
-        else {
-            return "redirect:/";
-        }
+        return "redirect:/";
     }
 
     @GetMapping("/admin")
@@ -246,12 +264,15 @@ public class MainController {
     }
 
     @GetMapping("/editPost")
-    public String editPost(int post_id, Model model, HttpServletRequest request) {
+    public String editPost(int post_id, HttpServletRequest request, Model model) {
+
         Optional<String> userCookie = fetchCookie(request);
         Post post = postRepository.findById(post_id).get();
+
         if (!userCookie.isPresent()) {
             return "redirect:/login";
         }
+
         navDisplay(model, request);
         int user_id = Integer.parseInt(userCookie.get());
         User user = userRepository.findById(user_id).get();
@@ -277,13 +298,18 @@ public class MainController {
             String expTimestamp = post.getExpiration_date().toString();
             model.addAttribute("htmlExpDate", expTimestamp);
         }
-
         model.addAttribute("post", post);
         return "editPost";
+
     }
 
     @PostMapping("/editPost")
-    public String performEditPost(Post post, Model model, HttpServletRequest request) {
+    public String performEditPost(@Valid Post post, BindingResult result, HttpServletRequest request, Model model) {
+        if(result.hasErrors()) {
+            navDisplay(model, request);
+            return "editPost";
+        }
+
         Optional<String> userCookie = fetchCookie(request);
         if (!userCookie.isPresent()) {
             return "redirect:/login";
@@ -323,10 +349,11 @@ public class MainController {
             post.setExpiration_date(timestamp);
         }
 
-        if (!thisPostTags.isEmpty())
-            tagRepository.saveAll(thisPostTags);
-        postRepository.save(post);
-        return "redirect:/user?user_id=" + user_id;
+            if (!thisPostTags.isEmpty())
+                tagRepository.saveAll(thisPostTags);
+            postRepository.save(post);
+            return "redirect:/user?user_id=" + user_id;
+
     }
 
     //Login page and logging in
