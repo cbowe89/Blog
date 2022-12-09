@@ -98,10 +98,10 @@
                         </div>
                         <div class="my-2">
                             <input type="text" name="Title" id="title" class="form-control" th:value="${post.title}" />
-                            <div th:if="${#fields.hasErrors('post.content')}">
-                                <p th:each="error : ${#fields.errors('post.content')}"
+                            <div th:if="${#fields.hasErrors('post.title')}">
+                                <p th:each="error : ${#fields.errors('post.title')}"
                                    class="alert alert-danger" th:text="${error}">
-                                    Post must have a body
+                                    Post must have a title
                                 </p>
                             </div>
                         </div>
@@ -110,7 +110,7 @@
                             <div th:if="${#fields.hasErrors('post.content')}">
                                 <p th:each="error : ${#fields.errors('post.content')}"
                                    class="alert alert-danger" th:text="${error}">
-                                    Post must have title
+                                    Post must have body
                                 </p>
                             </div>
                         </div>
