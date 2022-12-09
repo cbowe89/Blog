@@ -40,6 +40,9 @@
                                 th:text="${tag.tag_name} + ${!iterState.last ? ', ' : ''}">
                         </span>
                     </p>
+                    <p>Expiration Date:
+                        <span th:text="${post.expiration_date}"></span>
+                    </p>
                 </td>
             </tr>
             </tbody>
