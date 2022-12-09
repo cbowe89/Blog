@@ -1,6 +1,8 @@
 package com.ContentMgtSystem.Blog.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 import java.util.Objects;
@@ -11,9 +13,13 @@ public class User {
     @Id
     private int user_id;
 
+    @NotBlank(message = "Username cannot be blank.")
+    @NotNull(message = "Username cannot be null.")
     @Column(nullable = false)
     private String username;
 
+    @NotBlank(message = "Password cannot be blank.")
+    @NotNull(message = "Password cannot be null.")
     @Column(nullable = false)
     private String password;
 
