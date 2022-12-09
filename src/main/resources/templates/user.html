@@ -26,7 +26,6 @@
             <tr class="bg-info">
                 <th>ID</th>
                 <th>Title</th>
-                <th>Content</th>
                 <th>Date Created</th>
                 <th>Expiration Date</th>
                 <th>Edit</th>
@@ -35,8 +34,9 @@
             <tbody>
             <tr th:each="userPost : ${userPosts}">
                 <td th:text="${userPost.post_id}">Post ID</td>
-                <td th:text="${userPost.title}">Post Title</td>
-                <td th:utext="${userPost.content}">Post Content</td>
+                <td>
+                    <a href="#" th:href="@{/displayContent(post_id=${userPost.post_id})}" th:text="${userPost.title}"></a>
+                </td>
                 <td th:text="${userPost.created_date}">Creation Date</td>
                 <td th:text="${userPost.expiration_date}">Expiration Date</td>
                 <td>
@@ -50,10 +50,10 @@
 <div th:replace="fragments/footer :: foot"></div>
 <!-- For sort table, default sort by newest first -->
 <script>
-      $('#sortTable').DataTable({
-        order: [4, 'desc']
-      });
-    </script>
+    $('#sortTable').DataTable({
+        order: [2, 'desc']
+    });
+</script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
