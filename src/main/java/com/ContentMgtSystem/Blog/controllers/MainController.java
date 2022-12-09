@@ -405,7 +405,7 @@ public class MainController {
         String username = user.getUsername();
         String password = user.getPassword();
         User userFromDatabase = userRepository.findByUsername(username);
-        if (!password.equals(userFromDatabase.getPassword())) {
+        if (userFromDatabase == null || !password.equals(userFromDatabase.getPassword())) {
             return "redirect:/login";
         }
         Cookie jwtTokenCookie = new Cookie("user_id", String.valueOf(userFromDatabase.getUser_id()));
