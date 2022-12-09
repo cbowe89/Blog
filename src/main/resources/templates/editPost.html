@@ -132,6 +132,9 @@
                     <input type="hidden" name="created_date" th:value="${post.created_date}" />
                     <input type="hidden" name="status_id" th:value="${post.post_status.status_id}" />
                     <button type="submit" class="btn btn-primary my-2">Edit Blog Post</button>
+                    <button type="button" class="btn">
+                        <a href="#" th:href="@{/displayContent(post_id=${post.post_id})}">Cancel</a>
+                    </button>
                 </form>
             </div>
         </div>
