@@ -40,6 +40,7 @@ public class MainController {
     UserRepository userRepository;
 
     Set<ConstraintViolation<Post>> violations = new HashSet<>();
+    Set<ConstraintViolation<User>> userViolations = new HashSet<>();
 
     // Helper function to get user cookie
     private Optional<String> fetchCookie(HttpServletRequest request) {
@@ -299,7 +300,8 @@ public class MainController {
     }
 
     @PostMapping("/editPost")
-    public String performEditPost(@Valid Post post, BindingResult result, HttpServletRequest request, Model model) {
+    public String performEditPost(@Valid Post post, BindingResult result,
+                                  HttpServletRequest request, Model model) {
 //        if(result.hasErrors()) {
 //            navDisplay(model, request);
 //            if (post.getTags() != null) {
@@ -374,30 +376,36 @@ public class MainController {
             model.addAttribute("post", post);
             return "editPost";
         }
+
             if (!thisPostTags.isEmpty())
                 tagRepository.saveAll(thisPostTags);
             postRepository.save(post);
             return "redirect:/user?user_id=" + user_id;
-
     }
 
     //Login page and logging in
 
     @GetMapping("/login")
-    public String login(HttpServletRequest request) {
+    public String login(HttpServletRequest request, Model model) {
         Optional<String> userCookie = fetchCookie(request);
         if (userCookie.isPresent()) {
             return "redirect:/";
         }
+        model.addAttribute("errors", userViolations);
         return "login";
     }
 
     @PostMapping("/login")
-    public String performLogin(User user, HttpServletResponse response) {
+    public String performLogin(@Valid User user, BindingResult result,
+                               HttpServletResponse response) {
+        if(result.hasErrors()) {
+            return "login";
+        }
+
         String username = user.getUsername();
         String password = user.getPassword();
         User userFromDatabase = userRepository.findByUsername(username);
-        if (!password.equals(userFromDatabase.getPassword())) {
+        if (userFromDatabase == null || !password.equals(userFromDatabase.getPassword())) {
             return "redirect:/login";
         }
         Cookie jwtTokenCookie = new Cookie("user_id", String.valueOf(userFromDatabase.getUser_id()));
