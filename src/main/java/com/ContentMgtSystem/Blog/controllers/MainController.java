@@ -300,10 +300,23 @@ public class MainController {
 
     @PostMapping("/editPost")
     public String performEditPost(@Valid Post post, BindingResult result, HttpServletRequest request, Model model) {
-        if(result.hasErrors()) {
-            navDisplay(model, request);
-            return "editPost";
-        }
+//        if(result.hasErrors()) {
+//            navDisplay(model, request);
+//            if (post.getTags() != null) {
+//                String tags = post.getTags()
+//                        .stream()
+//                        .map(tag -> tag.getTag_name())
+//                        .collect(Collectors.joining(","));
+//                model.addAttribute("tags", tags);
+//            }
+//
+//            if (post.getExpiration_date() != null) {
+//                String expTimestamp = post.getExpiration_date().toString();
+//                model.addAttribute("htmlExpDate", expTimestamp);
+//            }
+//            model.addAttribute("post", post);
+//            return "editPost";
+//        }
 
         Optional<String> userCookie = fetchCookie(request);
         if (!userCookie.isPresent()) {
@@ -344,6 +357,23 @@ public class MainController {
             post.setExpiration_date(timestamp);
         }
 
+        if(result.hasErrors()) {
+            navDisplay(model, request);
+            if (post.getTags() != null) {
+                String tags = post.getTags()
+                        .stream()
+                        .map(tag -> tag.getTag_name())
+                        .collect(Collectors.joining(","));
+                model.addAttribute("tags", tags);
+            }
+
+            if (post.getExpiration_date() != null) {
+                String expTimestamp = post.getExpiration_date().toString();
+                model.addAttribute("htmlExpDate", expTimestamp);
+            }
+            model.addAttribute("post", post);
+            return "editPost";
+        }
             if (!thisPostTags.isEmpty())
                 tagRepository.saveAll(thisPostTags);
             postRepository.save(post);
